@@ -30,7 +30,6 @@ func (c *openAIClient) GenerateSummary(data model.DailyData) (string, string, er
 	ctx := context.Background()
 
 	userMessage := buildUserMessage(data)
-
 	schema := json.RawMessage(summarySchema)
 
 	resp, err := c.client.CreateChatCompletion(
@@ -38,14 +37,8 @@ func (c *openAIClient) GenerateSummary(data model.DailyData) (string, string, er
 		openai.ChatCompletionRequest{
 			Model: openai.GPT4o,
 			Messages: []openai.ChatCompletionMessage{
-				{
-					Role:    "system",
-					Content: systemPrompt(),
-				},
-				{
-					Role:    "user",
-					Content: userMessage,
-				},
+				{Role: "system", Content: systemPrompt()},
+				{Role: "user", Content: userMessage},
 			},
 			ResponseFormat: &openai.ChatCompletionResponseFormat{
 				Type: openai.ChatCompletionResponseFormatTypeJSONSchema,
@@ -74,25 +67,39 @@ func systemPrompt() string {
 	return "You are a professional macroeconomist. Write clear, concise summaries of global economic trends. Avoid buzzwords. If data is inconclusive, say so."
 }
 
+// buildUserMessage converts DailyData -> plain text bullet points for the LLM.
+// It now reads MetricDaily.Average (or falls back to the first source value).
 func buildUserMessage(data model.DailyData) string {
 	var b strings.Builder
-
 	caser := cases.Title(language.English)
+
 	b.WriteString("Macroeconomic indicators as of " + data.Date + ":\n\n")
 
 	for country, metrics := range data.Countries {
 		b.WriteString("Country: " + caser.String(country) + "\n")
-		b.WriteString("- Policy Rate: " + floatOrNA(metrics.PolicyRate.Value) + "\n")
-		b.WriteString("- Inflation: " + floatOrNA(metrics.Inflation.Value) + "\n")
-		b.WriteString("- Unemployment: " + floatOrNA(metrics.Unemployment.Value) + "\n")
-		b.WriteString("- PMI: " + floatOrNA(metrics.PMI.Value) + "\n")
-		b.WriteString("- Equity Index: " + floatOrNA(metrics.EquityIndex.Value) + "\n")
-		b.WriteString("- FX Rate to USD: " + floatOrNA(metrics.FxRate.Value) + "\n")
-		b.WriteString("- 10Y Bond Yield: " + floatOrNA(metrics.BondYield10Y.Value) + "\n\n")
+		b.WriteString("- Policy Rate: " + floatOrNA(metricValue(metrics.PolicyRate)) + "\n")
+		b.WriteString("- Inflation: " + floatOrNA(metricValue(metrics.Inflation)) + "\n")
+		b.WriteString("- Unemployment: " + floatOrNA(metricValue(metrics.Unemployment)) + "\n")
+		b.WriteString("- PMI: " + floatOrNA(metricValue(metrics.PMI)) + "\n")
+		b.WriteString("- Equity Index: " + floatOrNA(metricValue(metrics.EquityIndex)) + "\n")
+		b.WriteString("- FX Rate to USD: " + floatOrNA(metricValue(metrics.FxRate)) + "\n")
+		b.WriteString("- 10Y Bond Yield: " + floatOrNA(metricValue(metrics.BondYield10Y)) + "\n\n")
 	}
 
 	b.WriteString("Please provide a concise summary of the global economic condition and one actionable insight for investors.")
 	return b.String()
+}
+
+// metricValue returns the preferred numeric value for a MetricDaily.
+// Priority: Average -> first source value -> nil.
+func metricValue(m model.MetricDaily) *float64 {
+	if m.Average != nil {
+		return m.Average
+	}
+	if len(m.Sources) > 0 && m.Sources[0].Value != nil {
+		return m.Sources[0].Value
+	}
+	return nil
 }
 
 func floatOrNA(v *float64) string {
