@@ -1,9 +1,12 @@
 package llm
 
 import (
-	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/model"
+	"context"
+
+	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema"
 )
 
 type LLMClient interface {
-	GenerateSummary(data model.DailyData) (summary string, tip string, err error)
+	GenerateCountryMetrics(ctx context.Context, countryISO string, date string) (schema.CountryMetrics, error)
+	GenerateSummary(ctx context.Context, data schema.DailyData) (schema.StructuredLLMResponse, error)
 }

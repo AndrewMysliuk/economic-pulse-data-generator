@@ -1,74 +1,106 @@
 package core
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"os"
 	"path/filepath"
-	"sync"
 	"time"
 
+	"golang.org/x/sync/errgroup"
+
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/llm"
-	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/model"
+	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema"
+	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema/enum/metric_status"
+	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema/enum/metric_unit"
 )
 
-var countries = []string{
-	"usa", "china", "germany", "japan",
-	"uk", "france", "india", "brazil",
+var inputCountries = []string{
+	"usa",
+	// "china",
+	// "germany",
+	// "japan",
+	// "uk",
+	// "france",
+	// "india",
+	// "brazil",
 }
 
-// Generate builds the daily payload skeleton (per country metrics) and
-// delegates summary generation to LLM. Real fetching/parsing will replace
-// the placeholder metrics later.
+var countryISO = map[string]string{
+	"usa": "US",
+	// "china":   "CN",
+	// "germany": "DE",
+	// "japan":   "JP",
+	// "uk":      "GB",
+	// "france":  "FR",
+	// "india":   "IN",
+	// "brazil":  "BR",
+}
+
 func Generate(llmClient llm.LLMClient) error {
-	today := time.Now().Format("2006-01-02")
-	data := model.DailyData{
+	rootCtx := context.Background()
+	today := time.Now().UTC().Format("2006-01-02")
+
+	data := schema.DailyData{
 		Date:      today,
-		Countries: make(map[string]model.CountryMetrics),
+		Countries: make(map[string]schema.CountryMetrics, len(inputCountries)),
 	}
 
-	var mu sync.Mutex
-	var wg sync.WaitGroup
+	eg, _ := errgroup.WithContext(rootCtx)
+	eg.SetLimit(4)
 
-	for _, country := range countries {
-		wg.Add(1)
-		go func(country string) {
-			defer wg.Done()
-
-			// Placeholder metric with unknown status and no sources/average.
-			empty := model.MetricDaily{
-				Sources: nil,
-				Average: nil,
-				Status:  "unknown",
-				Comment: "",
+	for _, c := range inputCountries {
+		cc := c
+		eg.Go(func() error {
+			iso := countryISO[cc]
+			if iso == "" {
+				log.Printf("skip unknown country key: %s", cc)
+				return nil
 			}
 
-			// Initialize all metrics for the country (to be filled by real fetchers).
-			m := model.CountryMetrics{
-				PolicyRate:   empty, // TODO: replace with fetched value(s)
-				Inflation:    empty, // TODO: replace with fetched value(s)
-				Unemployment: empty, // TODO: replace with fetched value(s)
-				PMI:          empty, // TODO: replace with fetched value(s)
-				EquityIndex:  empty, // TODO: replace with fetched value(s)
-				FxRate:       empty, // TODO: replace with fetched value(s)
-				BondYield10Y: empty, // TODO: replace with fetched value(s)
+			cm := initEmptyCountryMetrics()
+
+			ctx, cancel := context.WithTimeout(rootCtx, 25*time.Second)
+			defer cancel()
+
+			filled, err := llmClient.GenerateCountryMetrics(ctx, iso, today)
+			if err != nil {
+				log.Printf("LLM country=%s failed: %v", iso, err)
+			} else {
+				mergeCountryMetrics(&cm, &filled)
+
+				cm.PolicyRate.ComputeAverage()
+				cm.Inflation.ComputeAverage()
+				cm.Unemployment.ComputeAverage()
+				cm.PMI.ComputeAverage()
+				cm.EquityIndex.ComputeAverage()
+				cm.CurrencyIndex.ComputeAverage()
+				cm.BondYield10Y.ComputeAverage()
+
+				log.Printf(
+					"LLM country=%s OK | policy_rate=%.2f | inflation=%.2f | unemployment=%.2f",
+					iso,
+					schema.PtrVal(cm.PolicyRate.Average),
+					schema.PtrVal(cm.Inflation.Average),
+					schema.PtrVal(cm.Unemployment.Average),
+				)
 			}
 
-			mu.Lock()
-			data.Countries[country] = m
-			mu.Unlock()
-		}(country)
+			data.Countries[iso] = cm
+			return nil
+		})
 	}
 
-	wg.Wait()
-
-	// LLM summary (note: openai.go must read MetricDaily.Average or Sources[0])
-	summary, tip, err := llmClient.GenerateSummary(data)
-	if err != nil {
+	if err := eg.Wait(); err != nil {
 		return err
 	}
-	data.Summary.Text = summary
-	data.Summary.Tip = tip
+
+	if summary, err := llmClient.GenerateSummary(rootCtx, data); err == nil {
+		data.Summary = summary
+	} else {
+		log.Printf("failed to generate summary: %v", err)
+	}
 
 	if err := saveJSON(data); err != nil {
 		return err
@@ -78,7 +110,7 @@ func Generate(llmClient llm.LLMClient) error {
 	return nil
 }
 
-func saveJSON(data model.DailyData) error {
+func saveJSON(data schema.DailyData) error {
 	outputDir := "output"
 	if err := os.MkdirAll(outputDir, os.ModePerm); err != nil {
 		return err
@@ -91,7 +123,55 @@ func saveJSON(data model.DailyData) error {
 	}
 	defer file.Close()
 
-	encoder := json.NewEncoder(file)
-	encoder.SetIndent("", "  ")
-	return encoder.Encode(data)
+	enc := json.NewEncoder(file)
+	enc.SetIndent("", "  ")
+	return enc.Encode(data)
+}
+
+func NewEmptyMetric(unit metric_unit.MetricUnit) schema.MetricDaily {
+	return schema.MetricDaily{
+		Sources: nil,
+		Average: nil,
+		Unit:    unit,
+		Status:  metric_status.Unknown,
+	}
+}
+
+func initEmptyCountryMetrics() schema.CountryMetrics {
+	return schema.CountryMetrics{
+		PolicyRate:    NewEmptyMetric(metric_unit.RatePct),
+		Inflation:     NewEmptyMetric(metric_unit.Percent),
+		Unemployment:  NewEmptyMetric(metric_unit.Percent),
+		PMI:           NewEmptyMetric(metric_unit.Index),
+		EquityIndex:   NewEmptyMetric(metric_unit.Index),
+		CurrencyIndex: NewEmptyMetric(metric_unit.Index),
+		BondYield10Y:  NewEmptyMetric(metric_unit.Percent),
+	}
+}
+
+func mergeMetric(dst *schema.MetricDaily, src *schema.MetricDaily) {
+	if src == nil {
+		return
+	}
+	if len(src.Sources) > 0 {
+		dst.Sources = src.Sources
+	}
+
+	if src.Unit != "" {
+		dst.Unit = src.Unit
+	}
+}
+
+func mergeCountryMetrics(dst, src *schema.CountryMetrics) {
+	mergeMetric(&dst.PolicyRate, &src.PolicyRate)
+	mergeMetric(&dst.Inflation, &src.Inflation)
+	mergeMetric(&dst.Unemployment, &src.Unemployment)
+	mergeMetric(&dst.PMI, &src.PMI)
+	mergeMetric(&dst.EquityIndex, &src.EquityIndex)
+	mergeMetric(&dst.CurrencyIndex, &src.CurrencyIndex)
+	mergeMetric(&dst.BondYield10Y, &src.BondYield10Y)
+
+	if len(src.FxRates) > 0 {
+		dst.FxRates = src.FxRates
+	}
 }

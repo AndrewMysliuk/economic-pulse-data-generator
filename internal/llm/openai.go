@@ -5,13 +5,15 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
-	"strings"
 
-	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/model"
+	country_metrics_prompt "github.com/AndrewMysliuk/economic-pulse-data-generator/internal/llm/prompts/country_metrics"
+	summary_prompt "github.com/AndrewMysliuk/economic-pulse-data-generator/internal/llm/prompts/summary"
+	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema"
 	openai "github.com/sashabaranov/go-openai"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
+
+//go:embed json_schema/country_metrics.schema.json
+var countryMetricsSchema []byte
 
 //go:embed json_schema/summary.schema.json
 var summarySchema []byte
@@ -26,18 +28,52 @@ func NewOpenAIClient(apiKey string) LLMClient {
 	}
 }
 
-func (c *openAIClient) GenerateSummary(data model.DailyData) (string, string, error) {
-	ctx := context.Background()
+func (c *openAIClient) GenerateCountryMetrics(ctx context.Context, countryISO string, date string) (schema.CountryMetrics, error) {
+	userMsg := country_metrics_prompt.BuildUserMessage(countryISO, date)
+	schemaDef := json.RawMessage(countryMetricsSchema)
 
-	userMessage := buildUserMessage(data)
-	schema := json.RawMessage(summarySchema)
+	apiResp, err := c.client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{
+		Model: openai.GPT4o,
+		Messages: []openai.ChatCompletionMessage{
+			{Role: "system", Content: country_metrics_prompt.SystemPrompt()},
+			{Role: "user", Content: userMsg},
+		},
+		ResponseFormat: &openai.ChatCompletionResponseFormat{
+			Type: openai.ChatCompletionResponseFormatTypeJSONSchema,
+			JSONSchema: &openai.ChatCompletionResponseFormatJSONSchema{
+				Name:        "CountryMetrics",
+				Description: "Country-level macro metrics with sources and units",
+				Schema:      schemaDef,
+				Strict:      true,
+			},
+		},
+	})
+	if err != nil {
+		return schema.CountryMetrics{}, err
+	}
+	if len(apiResp.Choices) == 0 {
+		return schema.CountryMetrics{}, fmt.Errorf("empty choices from LLM")
+	}
 
-	resp, err := c.client.CreateChatCompletion(
+	var parsed schema.CountryMetrics
+	if err := json.Unmarshal([]byte(apiResp.Choices[0].Message.Content), &parsed); err != nil {
+		return schema.CountryMetrics{},
+			fmt.Errorf("invalid JSON from LLM: %w\nRaw: %s", err, apiResp.Choices[0].Message.Content)
+	}
+
+	return parsed, nil
+}
+
+func (c *openAIClient) GenerateSummary(ctx context.Context, data schema.DailyData) (resp schema.StructuredLLMResponse, err error) {
+	userMessage := summary_prompt.BuildUserMessage(data)
+	schemaDef := json.RawMessage(summarySchema)
+
+	apiResp, err := c.client.CreateChatCompletion(
 		ctx,
 		openai.ChatCompletionRequest{
 			Model: openai.GPT4o,
 			Messages: []openai.ChatCompletionMessage{
-				{Role: "system", Content: systemPrompt()},
+				{Role: "system", Content: summary_prompt.SystemPrompt()},
 				{Role: "user", Content: userMessage},
 			},
 			ResponseFormat: &openai.ChatCompletionResponseFormat{
@@ -45,70 +81,21 @@ func (c *openAIClient) GenerateSummary(data model.DailyData) (string, string, er
 				JSONSchema: &openai.ChatCompletionResponseFormatJSONSchema{
 					Name:        "EconomicSummary",
 					Description: "JSON response with 'summary' and 'tip' fields",
-					Schema:      schema,
+					Schema:      schemaDef,
 					Strict:      true,
 				},
 			},
 		},
 	)
 	if err != nil {
-		return "", "", err
+		return schema.StructuredLLMResponse{}, err
 	}
 
-	var parsed model.StructuredLLMResponse
-	if err := json.Unmarshal([]byte(resp.Choices[0].Message.Content), &parsed); err != nil {
-		return "", "", fmt.Errorf("invalid JSON from LLM: %w\nRaw: %s", err, resp.Choices[0].Message.Content)
+	var parsed schema.StructuredLLMResponse
+	if err := json.Unmarshal([]byte(apiResp.Choices[0].Message.Content), &parsed); err != nil {
+		return schema.StructuredLLMResponse{},
+			fmt.Errorf("invalid JSON from LLM: %w\nRaw: %s", err, apiResp.Choices[0].Message.Content)
 	}
 
-	return parsed.Summary, parsed.Tip, nil
-}
-
-func systemPrompt() string {
-	return "You are a professional macroeconomist. Write clear, concise summaries of global economic trends. Avoid buzzwords. If data is inconclusive, say so."
-}
-
-// buildUserMessage converts DailyData -> plain text bullet points for the LLM.
-// It now reads MetricDaily.Average (or falls back to the first source value).
-func buildUserMessage(data model.DailyData) string {
-	var b strings.Builder
-	caser := cases.Title(language.English)
-
-	b.WriteString("Macroeconomic indicators as of " + data.Date + ":\n\n")
-
-	for country, metrics := range data.Countries {
-		b.WriteString("Country: " + caser.String(country) + "\n")
-		b.WriteString("- Policy Rate: " + floatOrNA(metricValue(metrics.PolicyRate)) + "\n")
-		b.WriteString("- Inflation: " + floatOrNA(metricValue(metrics.Inflation)) + "\n")
-		b.WriteString("- Unemployment: " + floatOrNA(metricValue(metrics.Unemployment)) + "\n")
-		b.WriteString("- PMI: " + floatOrNA(metricValue(metrics.PMI)) + "\n")
-		b.WriteString("- Equity Index: " + floatOrNA(metricValue(metrics.EquityIndex)) + "\n")
-		b.WriteString("- FX Rate to USD: " + floatOrNA(metricValue(metrics.FxRate)) + "\n")
-		b.WriteString("- 10Y Bond Yield: " + floatOrNA(metricValue(metrics.BondYield10Y)) + "\n\n")
-	}
-
-	b.WriteString("Please provide a concise summary of the global economic condition and one actionable insight for investors.")
-	return b.String()
-}
-
-// metricValue returns the preferred numeric value for a MetricDaily.
-// Priority: Average -> first source value -> nil.
-func metricValue(m model.MetricDaily) *float64 {
-	if m.Average != nil {
-		return m.Average
-	}
-	if len(m.Sources) > 0 && m.Sources[0].Value != nil {
-		return m.Sources[0].Value
-	}
-	return nil
-}
-
-func floatOrNA(v *float64) string {
-	if v == nil {
-		return "N/A"
-	}
-	return formatFloat(*v)
-}
-
-func formatFloat(f float64) string {
-	return strings.TrimRight(strings.TrimRight(fmt.Sprintf("%.2f", f), "0"), ".")
+	return parsed, nil
 }
