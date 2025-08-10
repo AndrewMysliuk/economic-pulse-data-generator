@@ -102,3 +102,51 @@ func PtrVal(v *float64) float64 {
 	}
 	return *v
 }
+
+func NewEmptyMetric(unit metric_unit.MetricUnit) MetricDaily {
+	return MetricDaily{
+		Sources: nil,
+		Average: nil,
+		Unit:    unit,
+		Status:  metric_status.Unknown,
+	}
+}
+
+func InitEmptyCountryMetrics() CountryMetrics {
+	return CountryMetrics{
+		PolicyRate:    NewEmptyMetric(metric_unit.RatePct),
+		Inflation:     NewEmptyMetric(metric_unit.Percent),
+		Unemployment:  NewEmptyMetric(metric_unit.Percent),
+		PMI:           NewEmptyMetric(metric_unit.Index),
+		EquityIndex:   NewEmptyMetric(metric_unit.Index),
+		CurrencyIndex: NewEmptyMetric(metric_unit.Index),
+		BondYield10Y:  NewEmptyMetric(metric_unit.Percent),
+	}
+}
+
+func MergeMetric(dst *MetricDaily, src *MetricDaily) {
+	if src == nil {
+		return
+	}
+	if len(src.Sources) > 0 {
+		dst.Sources = src.Sources
+	}
+
+	if src.Unit != "" {
+		dst.Unit = src.Unit
+	}
+}
+
+func MergeCountryMetrics(dst, src *CountryMetrics) {
+	MergeMetric(&dst.PolicyRate, &src.PolicyRate)
+	MergeMetric(&dst.Inflation, &src.Inflation)
+	MergeMetric(&dst.Unemployment, &src.Unemployment)
+	MergeMetric(&dst.PMI, &src.PMI)
+	MergeMetric(&dst.EquityIndex, &src.EquityIndex)
+	MergeMetric(&dst.CurrencyIndex, &src.CurrencyIndex)
+	MergeMetric(&dst.BondYield10Y, &src.BondYield10Y)
+
+	if len(src.FxRates) > 0 {
+		dst.FxRates = src.FxRates
+	}
+}

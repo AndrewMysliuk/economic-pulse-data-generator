@@ -12,30 +12,28 @@ import (
 
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/llm"
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema"
-	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema/enum/metric_status"
-	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema/enum/metric_unit"
 )
 
 var inputCountries = []string{
 	"usa",
-	// "china",
-	// "germany",
-	// "japan",
-	// "uk",
-	// "france",
-	// "india",
-	// "brazil",
+	"china",
+	"germany",
+	"japan",
+	"uk",
+	"france",
+	"india",
+	"brazil",
 }
 
 var countryISO = map[string]string{
-	"usa": "US",
-	// "china":   "CN",
-	// "germany": "DE",
-	// "japan":   "JP",
-	// "uk":      "GB",
-	// "france":  "FR",
-	// "india":   "IN",
-	// "brazil":  "BR",
+	"usa":     "US",
+	"china":   "CN",
+	"germany": "DE",
+	"japan":   "JP",
+	"uk":      "GB",
+	"france":  "FR",
+	"india":   "IN",
+	"brazil":  "BR",
 }
 
 func Generate(llmClient llm.LLMClient) error {
@@ -59,16 +57,16 @@ func Generate(llmClient llm.LLMClient) error {
 				return nil
 			}
 
-			cm := initEmptyCountryMetrics()
+			cm := schema.InitEmptyCountryMetrics()
 
-			ctx, cancel := context.WithTimeout(rootCtx, 25*time.Second)
+			ctx, cancel := context.WithTimeout(rootCtx, 120*time.Second)
 			defer cancel()
 
 			filled, err := llmClient.GenerateCountryMetrics(ctx, iso, today)
 			if err != nil {
 				log.Printf("LLM country=%s failed: %v", iso, err)
 			} else {
-				mergeCountryMetrics(&cm, &filled)
+				schema.MergeCountryMetrics(&cm, &filled)
 
 				cm.PolicyRate.ComputeAverage()
 				cm.Inflation.ComputeAverage()
@@ -106,6 +104,15 @@ func Generate(llmClient llm.LLMClient) error {
 		return err
 	}
 
+	historyDir := filepath.Join("output", "history")
+	if err := os.MkdirAll(historyDir, 0o755); err != nil {
+		return err
+	}
+	historyPath := filepath.Join(historyDir, "history_180.json")
+	if err := UpdateHistoryIncremental(historyPath, "output"); err != nil {
+		log.Printf("failed to update history: %v", err)
+	}
+
 	log.Printf("Data generated for %s and saved.\n", today)
 	return nil
 }
@@ -126,52 +133,4 @@ func saveJSON(data schema.DailyData) error {
 	enc := json.NewEncoder(file)
 	enc.SetIndent("", "  ")
 	return enc.Encode(data)
-}
-
-func NewEmptyMetric(unit metric_unit.MetricUnit) schema.MetricDaily {
-	return schema.MetricDaily{
-		Sources: nil,
-		Average: nil,
-		Unit:    unit,
-		Status:  metric_status.Unknown,
-	}
-}
-
-func initEmptyCountryMetrics() schema.CountryMetrics {
-	return schema.CountryMetrics{
-		PolicyRate:    NewEmptyMetric(metric_unit.RatePct),
-		Inflation:     NewEmptyMetric(metric_unit.Percent),
-		Unemployment:  NewEmptyMetric(metric_unit.Percent),
-		PMI:           NewEmptyMetric(metric_unit.Index),
-		EquityIndex:   NewEmptyMetric(metric_unit.Index),
-		CurrencyIndex: NewEmptyMetric(metric_unit.Index),
-		BondYield10Y:  NewEmptyMetric(metric_unit.Percent),
-	}
-}
-
-func mergeMetric(dst *schema.MetricDaily, src *schema.MetricDaily) {
-	if src == nil {
-		return
-	}
-	if len(src.Sources) > 0 {
-		dst.Sources = src.Sources
-	}
-
-	if src.Unit != "" {
-		dst.Unit = src.Unit
-	}
-}
-
-func mergeCountryMetrics(dst, src *schema.CountryMetrics) {
-	mergeMetric(&dst.PolicyRate, &src.PolicyRate)
-	mergeMetric(&dst.Inflation, &src.Inflation)
-	mergeMetric(&dst.Unemployment, &src.Unemployment)
-	mergeMetric(&dst.PMI, &src.PMI)
-	mergeMetric(&dst.EquityIndex, &src.EquityIndex)
-	mergeMetric(&dst.CurrencyIndex, &src.CurrencyIndex)
-	mergeMetric(&dst.BondYield10Y, &src.BondYield10Y)
-
-	if len(src.FxRates) > 0 {
-		dst.FxRates = src.FxRates
-	}
 }

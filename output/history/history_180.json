@@ -1,0 +1,706 @@
+{
+  "generated_at": "2025-08-10T17:33:08Z",
+  "window_days": 180,
+  "start_date": "2025-02-12",
+  "end_date": "2025-08-10",
+  "countries": {
+    "BR": {
+      "units": {
+        "bond_yield_10y": "RATE_PCT",
+        "currency_index": "INDEX",
+        "equity_index": "POINTS",
+        "inflation": "PERCENT",
+        "pmi": "INDEX",
+        "policy_rate": "RATE_PCT",
+        "unemployment": "PERCENT"
+      },
+      "policy_rate": [
+        {
+          "date": "2025-08-10",
+          "value": 10.25
+        }
+      ],
+      "inflation": [
+        {
+          "date": "2025-08-10",
+          "value": 4.5
+        }
+      ],
+      "unemployment": [
+        {
+          "date": "2025-08-10",
+          "value": 8.1
+        }
+      ],
+      "pmi": [
+        {
+          "date": "2025-08-10",
+          "value": 50.5
+        }
+      ],
+      "equity_index": [
+        {
+          "date": "2025-08-10",
+          "value": 115000
+        }
+      ],
+      "currency_index": [
+        {
+          "date": "2025-08-10",
+          "value": null
+        }
+      ],
+      "bond_yield_10y": [
+        {
+          "date": "2025-08-10",
+          "value": 12.5
+        }
+      ],
+      "fx_rates": {
+        "BRL/EUR": [
+          {
+            "date": "2025-08-09",
+            "value": 0.16
+          }
+        ],
+        "BRL/JPY": [
+          {
+            "date": "2025-08-09",
+            "value": 20.5
+          }
+        ],
+        "BRL/USD": [
+          {
+            "date": "2025-08-09",
+            "value": 0.18
+          }
+        ]
+      }
+    },
+    "CN": {
+      "units": {
+        "bond_yield_10y": "RATE_PCT",
+        "currency_index": "INDEX",
+        "equity_index": "POINTS",
+        "inflation": "PERCENT",
+        "pmi": "INDEX",
+        "policy_rate": "RATE_PCT",
+        "unemployment": "PERCENT"
+      },
+      "policy_rate": [
+        {
+          "date": "2025-08-10",
+          "value": 2.5
+        }
+      ],
+      "inflation": [
+        {
+          "date": "2025-08-10",
+          "value": 1.8
+        }
+      ],
+      "unemployment": [
+        {
+          "date": "2025-08-10",
+          "value": 5.1
+        }
+      ],
+      "pmi": [
+        {
+          "date": "2025-08-10",
+          "value": 51.1
+        }
+      ],
+      "equity_index": [
+        {
+          "date": "2025-08-10",
+          "value": 3400
+        }
+      ],
+      "currency_index": [
+        {
+          "date": "2025-08-10",
+          "value": null
+        }
+      ],
+      "bond_yield_10y": [
+        {
+          "date": "2025-08-10",
+          "value": 2.7
+        }
+      ],
+      "fx_rates": {
+        "CNY/BRL": [
+          {
+            "date": "2025-08-10",
+            "value": 0.775
+          }
+        ],
+        "CNY/CNY": [
+          {
+            "date": "2025-08-10",
+            "value": 1
+          }
+        ],
+        "CNY/EUR": [
+          {
+            "date": "2025-08-10",
+            "value": 0.146
+          }
+        ],
+        "CNY/GBP": [
+          {
+            "date": "2025-08-10",
+            "value": 0.124
+          }
+        ],
+        "CNY/INR": [
+          {
+            "date": "2025-08-10",
+            "value": 11.4
+          }
+        ],
+        "CNY/JPY": [
+          {
+            "date": "2025-08-10",
+            "value": 16.8
+          }
+        ],
+        "CNY/USD": [
+          {
+            "date": "2025-08-10",
+            "value": 0.154
+          }
+        ]
+      }
+    },
+    "DE": {
+      "units": {
+        "bond_yield_10y": "RATE_PCT",
+        "currency_index": "INDEX",
+        "equity_index": "INDEX",
+        "inflation": "PERCENT",
+        "pmi": "POINTS",
+        "policy_rate": "RATE_PCT",
+        "unemployment": "PERCENT"
+      },
+      "policy_rate": [
+        {
+          "date": "2025-08-10",
+          "value": 4.25
+        }
+      ],
+      "inflation": [
+        {
+          "date": "2025-08-10",
+          "value": 3.2
+        }
+      ],
+      "unemployment": [
+        {
+          "date": "2025-08-10",
+          "value": 5.6
+        }
+      ],
+      "pmi": [
+        {
+          "date": "2025-08-10",
+          "value": 47.8
+        }
+      ],
+      "equity_index": [
+        {
+          "date": "2025-08-10",
+          "value": 15580
+        }
+      ],
+      "currency_index": [
+        {
+          "date": "2025-08-10",
+          "value": null
+        }
+      ],
+      "bond_yield_10y": [
+        {
+          "date": "2025-08-10",
+          "value": 1.75
+        }
+      ],
+      "fx_rates": {
+        "EUR/BRL": [
+          {
+            "date": "2025-08-10",
+            "value": 5.68
+          }
+        ],
+        "EUR/CNY": [
+          {
+            "date": "2025-08-10",
+            "value": 7.6
+          }
+        ],
+        "EUR/GBP": [
+          {
+            "date": "2025-08-10",
+            "value": 0.85
+          }
+        ],
+        "EUR/INR": [
+          {
+            "date": "2025-08-10",
+            "value": 92.1
+          }
+        ],
+        "EUR/JPY": [
+          {
+            "date": "2025-08-10",
+            "value": 144.6
+          }
+        ],
+        "EUR/USD": [
+          {
+            "date": "2025-08-10",
+            "value": 1.09
+          }
+        ]
+      }
+    },
+    "FR": {
+      "units": {
+        "bond_yield_10y": "RATE_PCT",
+        "currency_index": "INDEX",
+        "equity_index": "POINTS",
+        "inflation": "PERCENT",
+        "pmi": "INDEX",
+        "policy_rate": "RATE_PCT",
+        "unemployment": "PERCENT"
+      },
+      "policy_rate": [
+        {
+          "date": "2025-08-10",
+          "value": 2.5
+        }
+      ],
+      "inflation": [
+        {
+          "date": "2025-08-10",
+          "value": 2.1
+        }
+      ],
+      "unemployment": [
+        {
+          "date": "2025-08-10",
+          "value": 7.4
+        }
+      ],
+      "pmi": [
+        {
+          "date": "2025-08-10",
+          "value": 52.3
+        }
+      ],
+      "equity_index": [
+        {
+          "date": "2025-08-10",
+          "value": 7150.6
+        }
+      ],
+      "currency_index": [
+        {
+          "date": "2025-08-10",
+          "value": null
+        }
+      ],
+      "bond_yield_10y": [
+        {
+          "date": "2025-08-10",
+          "value": 1.35
+        }
+      ],
+      "fx_rates": {
+        "EUR/BRL": [
+          {
+            "date": "2025-08-09",
+            "value": 5.6
+          }
+        ],
+        "EUR/CNY": [
+          {
+            "date": "2025-08-09",
+            "value": 8.1
+          }
+        ],
+        "EUR/GBP": [
+          {
+            "date": "2025-08-09",
+            "value": 0.85
+          }
+        ],
+        "EUR/INR": [
+          {
+            "date": "2025-08-09",
+            "value": 91.5
+          }
+        ],
+        "EUR/JPY": [
+          {
+            "date": "2025-08-09",
+            "value": 130.25
+          }
+        ],
+        "EUR/USD": [
+          {
+            "date": "2025-08-09",
+            "value": 1.1
+          }
+        ]
+      }
+    },
+    "GB": {
+      "units": {
+        "bond_yield_10y": "RATE_PCT",
+        "currency_index": "INDEX",
+        "equity_index": "INDEX",
+        "inflation": "PERCENT",
+        "pmi": "POINTS",
+        "policy_rate": "RATE_PCT",
+        "unemployment": "PERCENT"
+      },
+      "policy_rate": [
+        {
+          "date": "2025-08-10",
+          "value": 5.25
+        }
+      ],
+      "inflation": [
+        {
+          "date": "2025-08-10",
+          "value": 3.1
+        }
+      ],
+      "unemployment": [
+        {
+          "date": "2025-08-10",
+          "value": 4.3
+        }
+      ],
+      "pmi": [
+        {
+          "date": "2025-08-10",
+          "value": 55.4
+        }
+      ],
+      "equity_index": [
+        {
+          "date": "2025-08-10",
+          "value": 7425.3
+        }
+      ],
+      "currency_index": [
+        {
+          "date": "2025-08-10",
+          "value": 97.6
+        }
+      ],
+      "bond_yield_10y": [
+        {
+          "date": "2025-08-10",
+          "value": 2.85
+        }
+      ],
+      "fx_rates": {
+        "GBP/EUR": [
+          {
+            "date": "2025-08-10",
+            "value": 1.18
+          }
+        ],
+        "GBP/JPY": [
+          {
+            "date": "2025-08-10",
+            "value": 144.5
+          }
+        ],
+        "GBP/USD": [
+          {
+            "date": "2025-08-10",
+            "value": 1.31
+          }
+        ]
+      }
+    },
+    "IN": {
+      "units": {
+        "bond_yield_10y": "RATE_PCT",
+        "currency_index": "INDEX",
+        "equity_index": "POINTS",
+        "inflation": "PERCENT",
+        "pmi": "INDEX",
+        "policy_rate": "RATE_PCT",
+        "unemployment": "PERCENT"
+      },
+      "policy_rate": [
+        {
+          "date": "2025-08-10",
+          "value": 6.5
+        }
+      ],
+      "inflation": [
+        {
+          "date": "2025-08-10",
+          "value": 5.25
+        }
+      ],
+      "unemployment": [
+        {
+          "date": "2025-08-10",
+          "value": 7.05
+        }
+      ],
+      "pmi": [
+        {
+          "date": "2025-08-10",
+          "value": 51.3
+        }
+      ],
+      "equity_index": [
+        {
+          "date": "2025-08-10",
+          "value": 57830
+        }
+      ],
+      "currency_index": [
+        {
+          "date": "2025-08-10",
+          "value": null
+        }
+      ],
+      "bond_yield_10y": [
+        {
+          "date": "2025-08-10",
+          "value": 7.2
+        }
+      ],
+      "fx_rates": {
+        "INR/BRL": [
+          {
+            "date": "2025-08-10",
+            "value": 16.9
+          }
+        ],
+        "INR/CNY": [
+          {
+            "date": "2025-08-10",
+            "value": 11.65
+          }
+        ],
+        "INR/EUR": [
+          {
+            "date": "2025-08-10",
+            "value": 92.4
+          }
+        ],
+        "INR/GBP": [
+          {
+            "date": "2025-08-10",
+            "value": 107.5
+          }
+        ],
+        "INR/INR": [
+          {
+            "date": "2025-08-10",
+            "value": 1
+          }
+        ],
+        "INR/JPY": [
+          {
+            "date": "2025-08-10",
+            "value": 0.76
+          }
+        ],
+        "INR/USD": [
+          {
+            "date": "2025-08-10",
+            "value": 83.1
+          }
+        ]
+      }
+    },
+    "JP": {
+      "units": {
+        "bond_yield_10y": "PERCENT",
+        "currency_index": "INDEX",
+        "equity_index": "INDEX",
+        "inflation": "PERCENT",
+        "pmi": "POINTS",
+        "policy_rate": "RATE_PCT",
+        "unemployment": "PERCENT"
+      },
+      "policy_rate": [
+        {
+          "date": "2025-08-10",
+          "value": -0.1
+        }
+      ],
+      "inflation": [
+        {
+          "date": "2025-08-10",
+          "value": 1.2
+        }
+      ],
+      "unemployment": [
+        {
+          "date": "2025-08-10",
+          "value": 2.9
+        }
+      ],
+      "pmi": [
+        {
+          "date": "2025-08-10",
+          "value": 52.5
+        }
+      ],
+      "equity_index": [
+        {
+          "date": "2025-08-10",
+          "value": 32500
+        }
+      ],
+      "currency_index": [
+        {
+          "date": "2025-08-10",
+          "value": null
+        }
+      ],
+      "bond_yield_10y": [
+        {
+          "date": "2025-08-10",
+          "value": 0.5
+        }
+      ],
+      "fx_rates": {
+        "JPY/CNY": [
+          {
+            "date": "2025-08-09",
+            "value": 0.051
+          }
+        ],
+        "JPY/EUR": [
+          {
+            "date": "2025-08-09",
+            "value": 0.0066
+          }
+        ],
+        "JPY/GBP": [
+          {
+            "date": "2025-08-09",
+            "value": 0.0057
+          }
+        ],
+        "JPY/INR": [
+          {
+            "date": "2025-08-09",
+            "value": 0.53
+          }
+        ],
+        "JPY/USD": [
+          {
+            "date": "2025-08-09",
+            "value": 0.0071
+          }
+        ]
+      }
+    },
+    "US": {
+      "units": {
+        "bond_yield_10y": "RATE_PCT",
+        "currency_index": "INDEX",
+        "equity_index": "INDEX",
+        "inflation": "PERCENT",
+        "pmi": "POINTS",
+        "policy_rate": "RATE_PCT",
+        "unemployment": "PERCENT"
+      },
+      "policy_rate": [
+        {
+          "date": "2025-08-10",
+          "value": 5.5
+        }
+      ],
+      "inflation": [
+        {
+          "date": "2025-08-10",
+          "value": 3.2
+        }
+      ],
+      "unemployment": [
+        {
+          "date": "2025-08-10",
+          "value": 4.1
+        }
+      ],
+      "pmi": [
+        {
+          "date": "2025-08-10",
+          "value": 51.5
+        }
+      ],
+      "equity_index": [
+        {
+          "date": "2025-08-10",
+          "value": 4500
+        }
+      ],
+      "currency_index": [
+        {
+          "date": "2025-08-10",
+          "value": 102.5
+        }
+      ],
+      "bond_yield_10y": [
+        {
+          "date": "2025-08-10",
+          "value": 4
+        }
+      ],
+      "fx_rates": {
+        "USD/BRL": [
+          {
+            "date": "2025-08-10",
+            "value": 5
+          }
+        ],
+        "USD/CNY": [
+          {
+            "date": "2025-08-10",
+            "value": 7.1
+          }
+        ],
+        "USD/EUR": [
+          {
+            "date": "2025-08-10",
+            "value": 0.92
+          }
+        ],
+        "USD/GBP": [
+          {
+            "date": "2025-08-10",
+            "value": 0.78
+          }
+        ],
+        "USD/INR": [
+          {
+            "date": "2025-08-10",
+            "value": 82.5
+          }
+        ],
+        "USD/JPY": [
+          {
+            "date": "2025-08-10",
+            "value": 142
+          }
+        ]
+      }
+    }
+  }
+}

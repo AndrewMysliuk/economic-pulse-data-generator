@@ -11,7 +11,8 @@ Rules:
 - Do NOT add extra fields or omit required ones.
 - All numbers must be in the units specified by the "unit" field.
 - Dates must be in YYYY-MM-DD for daily values, and RFC3339 UTC datetime for "as_of".
-- "sources" must contain only real, verifiable sources; no fictional URLs or names.
+- "sources" should, where possible, contain 2–3 real, verifiable sources for each metric; no fictional URLs or names.
+- If only one trusted source is available, include it, but prefer providing multiple where possible.
 - If a value is unknown, set "value" to null, but still provide "date", "unit", "source_url", and "source_name".
 - If a metric is not applicable for this country, set its "status" to "UNKNOWN" and "sources" to an empty array.
 - "fx_rates" must always use convention XXX/YYY meaning YYY per 1 XXX.
@@ -40,7 +41,7 @@ Guidelines:
 - Dates: Use YYYY-MM-DD for 'date', and RFC3339 UTC for 'as_of'.
 - Units: Use enum values: PERCENT, INDEX, POINTS, LEVEL, RATE_PCT.
 - Values: Use realistic, recent data only; if unknown, set value = null.
-- Sources: Use trusted, verifiable public data sources (full URLs).
+- Sources: Preferably include 2–3 distinct, verifiable sources for each metric when possible.
 - fx_rates: Include USD, EUR, JPY, GBP, CNY, INR, BRL at minimum if available.
 - If metric is not applicable, set status=UNKNOWN and sources=[].
 
