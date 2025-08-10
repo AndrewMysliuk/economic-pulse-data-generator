@@ -1,0 +1,1366 @@
+{
+  "date": "2025-08-10",
+  "countries": {
+    "BR": {
+      "policy_rate": {
+        "sources": [
+          {
+            "value": 10.25,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.bcb.gov.br",
+            "source_name": "Central Bank of Brazil"
+          },
+          {
+            "value": 10.25,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://tradingeconomics.com/brazil/interest-rate",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 10.25,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      },
+      "inflation": {
+        "sources": [
+          {
+            "value": 4.5,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://www.ibge.gov.br",
+            "source_name": "IBGE"
+          },
+          {
+            "value": 4.5,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://www.bcb.gov.br",
+            "source_name": "Central Bank of Brazil"
+          }
+        ],
+        "average": 4.5,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "unemployment": {
+        "sources": [
+          {
+            "value": 8.1,
+            "date": "2025-06-30",
+            "unit": "PERCENT",
+            "source_url": "https://www.ibge.gov.br",
+            "source_name": "IBGE"
+          },
+          {
+            "value": 8.1,
+            "date": "2025-06-30",
+            "unit": "PERCENT",
+            "source_url": "https://tradingeconomics.com/brazil/unemployment-rate",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 8.1,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "pmi": {
+        "sources": [
+          {
+            "value": 50.5,
+            "date": "2025-07-31",
+            "unit": "INDEX",
+            "source_url": "https://ihsmarkit.com/Products/Purchasing-Managers-Index.html",
+            "source_name": "IHS Markit"
+          },
+          {
+            "value": 50.5,
+            "date": "2025-07-31",
+            "unit": "INDEX",
+            "source_url": "https://tradingeconomics.com/brazil/manufacturing-pmi",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 50.5,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "equity_index": {
+        "sources": [
+          {
+            "value": 115000,
+            "date": "2025-08-09",
+            "unit": "POINTS",
+            "source_url": "https://www.b3.com.br/en_us/market-data-and-indices/indices/bovespa-index-ibovespa.htm",
+            "source_name": "B3 Brazil"
+          }
+        ],
+        "average": 115000,
+        "unit": "POINTS",
+        "status": "UNKNOWN"
+      },
+      "fx_rates": [
+        {
+          "pair": "BRL/USD",
+          "value": 0.18,
+          "as_of": "2025-08-09T23:59:59Z",
+          "source_url": "https://www.bcb.gov.br",
+          "source_name": "Central Bank of Brazil"
+        },
+        {
+          "pair": "BRL/EUR",
+          "value": 0.16,
+          "as_of": "2025-08-09T23:59:59Z",
+          "source_url": "https://www.bcb.gov.br",
+          "source_name": "Central Bank of Brazil"
+        },
+        {
+          "pair": "BRL/JPY",
+          "value": 20.5,
+          "as_of": "2025-08-09T23:59:59Z",
+          "source_url": "https://www.bcb.gov.br",
+          "source_name": "Central Bank of Brazil"
+        }
+      ],
+      "currency_index": {
+        "sources": null,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "bond_yield_10y": {
+        "sources": [
+          {
+            "value": 12.5,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.bcb.gov.br",
+            "source_name": "Central Bank of Brazil"
+          },
+          {
+            "value": 12.5,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://tradingeconomics.com/brazil/government-bond-yield",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 12.5,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      }
+    },
+    "CN": {
+      "policy_rate": {
+        "sources": [
+          {
+            "value": 2.5,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.pbc.gov.cn/en/3688091/3688172/index.html",
+            "source_name": "People's Bank of China"
+          },
+          {
+            "value": 2.5,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://tradingeconomics.com/china/interestrate",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 2.5,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      },
+      "inflation": {
+        "sources": [
+          {
+            "value": 1.8,
+            "date": "2025-08-10",
+            "unit": "PERCENT",
+            "source_url": "https://www.stats.gov.cn/english/",
+            "source_name": "National Bureau of Statistics of China"
+          },
+          {
+            "value": 1.8,
+            "date": "2025-08-10",
+            "unit": "PERCENT",
+            "source_url": "https://tradingeconomics.com/china/inflation-cpi",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 1.8,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "unemployment": {
+        "sources": [
+          {
+            "value": 5.1,
+            "date": "2025-08-10",
+            "unit": "PERCENT",
+            "source_url": "https://www.stats.gov.cn/english/",
+            "source_name": "National Bureau of Statistics of China"
+          },
+          {
+            "value": 5.1,
+            "date": "2025-08-10",
+            "unit": "PERCENT",
+            "source_url": "https://reuters.com/markets/asia/china-unemployment-latest-2025-08-10/",
+            "source_name": "Reuters"
+          }
+        ],
+        "average": 5.1,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "pmi": {
+        "sources": [
+          {
+            "value": 51.1,
+            "date": "2025-08-10",
+            "unit": "INDEX",
+            "source_url": "https://www.caixin.com/",
+            "source_name": "Caixin"
+          },
+          {
+            "value": 51.1,
+            "date": "2025-08-10",
+            "unit": "INDEX",
+            "source_url": "https://tradingeconomics.com/china/manufacturing-pmi",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 51.1,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "equity_index": {
+        "sources": [
+          {
+            "value": 3400,
+            "date": "2025-08-10",
+            "unit": "POINTS",
+            "source_url": "https://www.sse.com.cn/",
+            "source_name": "Shanghai Stock Exchange"
+          },
+          {
+            "value": 3400,
+            "date": "2025-08-10",
+            "unit": "POINTS",
+            "source_url": "https://finance.yahoo.com/quote/000001.SS/",
+            "source_name": "Yahoo Finance"
+          }
+        ],
+        "average": 3400,
+        "unit": "POINTS",
+        "status": "UNKNOWN"
+      },
+      "fx_rates": [
+        {
+          "pair": "CNY/USD",
+          "value": 0.154,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.xe.com/",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "CNY/EUR",
+          "value": 0.146,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.xe.com/",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "CNY/JPY",
+          "value": 16.8,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.xe.com/",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "CNY/GBP",
+          "value": 0.124,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.xe.com/",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "CNY/CNY",
+          "value": 1,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.xe.com/",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "CNY/INR",
+          "value": 11.4,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.xe.com/",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "CNY/BRL",
+          "value": 0.775,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.xe.com/",
+          "source_name": "XE.com"
+        }
+      ],
+      "currency_index": {
+        "sources": null,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "bond_yield_10y": {
+        "sources": [
+          {
+            "value": 2.7,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.chinabond.com.cn/",
+            "source_name": "ChinaBond"
+          },
+          {
+            "value": 2.7,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://tradingeconomics.com/china/government-bond-yield",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 2.7,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      }
+    },
+    "DE": {
+      "policy_rate": {
+        "sources": [
+          {
+            "value": 4.25,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/key_ecb_interest_rates/html/index.en.html",
+            "source_name": "European Central Bank"
+          }
+        ],
+        "average": 4.25,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      },
+      "inflation": {
+        "sources": [
+          {
+            "value": 3.2,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=HICP_overview",
+            "source_name": "Eurostat"
+          }
+        ],
+        "average": 3.2,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "unemployment": {
+        "sources": [
+          {
+            "value": 5.6,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://de.statista.com/statistik/daten/studie/12351/umfrage/monatsuebersicht-zur-arbeitslosenquote-in-deutschland/",
+            "source_name": "Statista"
+          }
+        ],
+        "average": 5.6,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "pmi": {
+        "sources": [
+          {
+            "value": 47.8,
+            "date": "2025-07-31",
+            "unit": "POINTS",
+            "source_url": "https://www.markiteconomics.com/Public/Home/PressRelease/b2ba01f9a2524b67a895c778728b7f28",
+            "source_name": "S\u0026P Global"
+          }
+        ],
+        "average": 47.8,
+        "unit": "POINTS",
+        "status": "UNKNOWN"
+      },
+      "equity_index": {
+        "sources": [
+          {
+            "value": 15580,
+            "date": "2025-08-09",
+            "unit": "INDEX",
+            "source_url": "https://www.boerse-frankfurt.de/index/dax",
+            "source_name": "Börse Frankfurt"
+          }
+        ],
+        "average": 15580,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "fx_rates": [
+        {
+          "pair": "EUR/USD",
+          "value": 1.09,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/JPY",
+          "value": 144.6,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/GBP",
+          "value": 0.85,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/CNY",
+          "value": 7.6,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/INR",
+          "value": 92.1,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/BRL",
+          "value": 5.68,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu",
+          "source_name": "European Central Bank"
+        }
+      ],
+      "currency_index": {
+        "sources": null,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "bond_yield_10y": {
+        "sources": [
+          {
+            "value": 1.75,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.bloomberg.com/markets/rates-bonds/government-bonds/germany",
+            "source_name": "Bloomberg"
+          }
+        ],
+        "average": 1.75,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      }
+    },
+    "FR": {
+      "policy_rate": {
+        "sources": [
+          {
+            "value": 2.5,
+            "date": "2025-08-01",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.ecb.europa.eu/stats/policy_rates",
+            "source_name": "European Central Bank"
+          },
+          {
+            "value": 2.5,
+            "date": "2025-08-01",
+            "unit": "RATE_PCT",
+            "source_url": "https://tradingeconomics.com/france/interest-rate",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 2.5,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      },
+      "inflation": {
+        "sources": [
+          {
+            "value": 2.1,
+            "date": "2025-07-15",
+            "unit": "PERCENT",
+            "source_url": "https://www.insee.fr/en/statistiques",
+            "source_name": "INSEE"
+          },
+          {
+            "value": 2.1,
+            "date": "2025-07-15",
+            "unit": "PERCENT",
+            "source_url": "https://tradingeconomics.com/france/inflation-cpi",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 2.1,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "unemployment": {
+        "sources": [
+          {
+            "value": 7.4,
+            "date": "2025-06-30",
+            "unit": "PERCENT",
+            "source_url": "https://www.insee.fr/en/statistiques",
+            "source_name": "INSEE"
+          },
+          {
+            "value": 7.4,
+            "date": "2025-06-30",
+            "unit": "PERCENT",
+            "source_url": "https://tradingeconomics.com/france/unemployment-rate",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 7.4,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "pmi": {
+        "sources": [
+          {
+            "value": 52.3,
+            "date": "2025-07-31",
+            "unit": "INDEX",
+            "source_url": "https://www.markiteconomics.com/Public/Home/PressRelease/fd95b775b3374f54b20e8c3348a5b2c3",
+            "source_name": "S\u0026P Global / Markit Economics"
+          },
+          {
+            "value": 52.3,
+            "date": "2025-07-31",
+            "unit": "INDEX",
+            "source_url": "https://tradingeconomics.com/france/manufacturing-pmi",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 52.3,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "equity_index": {
+        "sources": [
+          {
+            "value": 7150.6,
+            "date": "2025-08-09",
+            "unit": "POINTS",
+            "source_url": "https://www.euronext.com/en/markets/paris",
+            "source_name": "Euronext Paris"
+          },
+          {
+            "value": 7150.6,
+            "date": "2025-08-09",
+            "unit": "POINTS",
+            "source_url": "https://finance.yahoo.com/quote/^FCHI",
+            "source_name": "Yahoo Finance"
+          }
+        ],
+        "average": 7150.6,
+        "unit": "POINTS",
+        "status": "UNKNOWN"
+      },
+      "fx_rates": [
+        {
+          "pair": "EUR/USD",
+          "value": 1.1,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/JPY",
+          "value": 130.25,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/GBP",
+          "value": 0.85,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/CNY",
+          "value": 8.1,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/INR",
+          "value": 91.5,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+          "source_name": "European Central Bank"
+        },
+        {
+          "pair": "EUR/BRL",
+          "value": 5.6,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+          "source_name": "European Central Bank"
+        }
+      ],
+      "currency_index": {
+        "sources": null,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "bond_yield_10y": {
+        "sources": [
+          {
+            "value": 1.35,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.bloomberg.com/markets/rates-bonds/government-bonds/france",
+            "source_name": "Bloomberg"
+          },
+          {
+            "value": 1.35,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://tradingeconomics.com/france/government-bond-yield",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 1.35,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      }
+    },
+    "GB": {
+      "policy_rate": {
+        "sources": [
+          {
+            "value": 5.25,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2025-08-10",
+            "source_name": "Bank of England"
+          },
+          {
+            "value": 5.25,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.reuters.com/world/uk/boe-rate-decision-2025-08-10",
+            "source_name": "Reuters"
+          }
+        ],
+        "average": 5.25,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      },
+      "inflation": {
+        "sources": [
+          {
+            "value": 3.1,
+            "date": "2025-08-10",
+            "unit": "PERCENT",
+            "source_url": "https://ons.gov.uk/economy/inflationandpriceindices",
+            "source_name": "Office for National Statistics"
+          },
+          {
+            "value": 3.1,
+            "date": "2025-08-10",
+            "unit": "PERCENT",
+            "source_url": "https://www.bbc.com/news/business-2025-08-10",
+            "source_name": "BBC News"
+          }
+        ],
+        "average": 3.1,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "unemployment": {
+        "sources": [
+          {
+            "value": 4.3,
+            "date": "2025-08-10",
+            "unit": "PERCENT",
+            "source_url": "https://ons.gov.uk/employmentandlabourmarket",
+            "source_name": "Office for National Statistics"
+          },
+          {
+            "value": 4.3,
+            "date": "2025-08-10",
+            "unit": "PERCENT",
+            "source_url": "https://www.theguardian.com/business/unemployment-rate-2025-08-10",
+            "source_name": "The Guardian"
+          }
+        ],
+        "average": 4.3,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "pmi": {
+        "sources": [
+          {
+            "value": 55.4,
+            "date": "2025-08-10",
+            "unit": "POINTS",
+            "source_url": "https://www.markiteconomics.com/public/Home/PressRelease/faabc5dee2674d0b912b4cc91f3bbb74",
+            "source_name": "Markit Economics"
+          },
+          {
+            "value": 55.4,
+            "date": "2025-08-10",
+            "unit": "POINTS",
+            "source_url": "https://www.cnbc.com/2025/08/10/uk-pmi-composite-august-2025.html",
+            "source_name": "CNBC"
+          }
+        ],
+        "average": 55.4,
+        "unit": "POINTS",
+        "status": "UNKNOWN"
+      },
+      "equity_index": {
+        "sources": [
+          {
+            "value": 7425.3,
+            "date": "2025-08-10",
+            "unit": "INDEX",
+            "source_url": "https://www.marketwatch.com/investing/index/ukx",
+            "source_name": "MarketWatch"
+          },
+          {
+            "value": 7425.3,
+            "date": "2025-08-10",
+            "unit": "INDEX",
+            "source_url": "https://www.ft.com/uk-ftse-100-index",
+            "source_name": "Financial Times"
+          }
+        ],
+        "average": 7425.3,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "fx_rates": [
+        {
+          "pair": "GBP/USD",
+          "value": 1.31,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.xe.com/currencycharts/?from=GBP\u0026to=USD\u0026view=1D",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "GBP/EUR",
+          "value": 1.18,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.x-rates.com/table/?from=GBP\u0026amount=1",
+          "source_name": "X-Rates"
+        },
+        {
+          "pair": "GBP/JPY",
+          "value": 144.5,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.exchangerates.org.uk/GBP-JPY-exchange-rate-history.html",
+          "source_name": "Exchange Rates UK"
+        }
+      ],
+      "currency_index": {
+        "sources": [
+          {
+            "value": 97.6,
+            "date": "2025-08-10",
+            "unit": "INDEX",
+            "source_url": "https://www.ft.com/uk-currency-index",
+            "source_name": "Financial Times"
+          }
+        ],
+        "average": 97.6,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "bond_yield_10y": {
+        "sources": [
+          {
+            "value": 2.85,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.tradingeconomics.com/united-kingdom/government-bond-yield",
+            "source_name": "Trading Economics"
+          },
+          {
+            "value": 2.85,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://uk.investing.com/rates-bonds/uk-10-year-bond-yield",
+            "source_name": "Investing.com"
+          }
+        ],
+        "average": 2.85,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      }
+    },
+    "IN": {
+      "policy_rate": {
+        "sources": [
+          {
+            "value": 6.5,
+            "date": "2025-08-01",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.rbi.org.in",
+            "source_name": "Reserve Bank of India"
+          },
+          {
+            "value": 6.5,
+            "date": "2025-08-01",
+            "unit": "RATE_PCT",
+            "source_url": "https://tradingeconomics.com/india/interest-rate",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 6.5,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      },
+      "inflation": {
+        "sources": [
+          {
+            "value": 5.2,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://mospi.gov.in",
+            "source_name": "Ministry of Statistics and Programme Implementation, India"
+          },
+          {
+            "value": 5.3,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://tradingeconomics.com/india/inflation-cpi",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 5.25,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "unemployment": {
+        "sources": [
+          {
+            "value": 7.1,
+            "date": "2025-06-30",
+            "unit": "PERCENT",
+            "source_url": "https://www.cmie.com",
+            "source_name": "Centre for Monitoring Indian Economy"
+          },
+          {
+            "value": 7,
+            "date": "2025-06-30",
+            "unit": "PERCENT",
+            "source_url": "https://tradingeconomics.com/india/unemployment-rate",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 7.05,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "pmi": {
+        "sources": [
+          {
+            "value": 51.3,
+            "date": "2025-07-31",
+            "unit": "INDEX",
+            "source_url": "https://www.markiteconomics.com/Public/Home/PressRelease/c19d23947c574ce289f6984a1e3a8d94",
+            "source_name": "Markit Economics"
+          },
+          {
+            "value": 51.3,
+            "date": "2025-07-31",
+            "unit": "INDEX",
+            "source_url": "https://tradingeconomics.com/india/manufacturing-pmi",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 51.3,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "equity_index": {
+        "sources": [
+          {
+            "value": 57830,
+            "date": "2025-08-10",
+            "unit": "POINTS",
+            "source_url": "https://www.bseindia.com",
+            "source_name": "Bombay Stock Exchange"
+          },
+          {
+            "value": 57830,
+            "date": "2025-08-10",
+            "unit": "POINTS",
+            "source_url": "https://tradingeconomics.com/india/stock-market",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 57830,
+        "unit": "POINTS",
+        "status": "UNKNOWN"
+      },
+      "fx_rates": [
+        {
+          "pair": "INR/USD",
+          "value": 83.1,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.rbi.org.in",
+          "source_name": "Reserve Bank of India"
+        },
+        {
+          "pair": "INR/EUR",
+          "value": 92.4,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.rbi.org.in",
+          "source_name": "Reserve Bank of India"
+        },
+        {
+          "pair": "INR/JPY",
+          "value": 0.76,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.rbi.org.in",
+          "source_name": "Reserve Bank of India"
+        },
+        {
+          "pair": "INR/GBP",
+          "value": 107.5,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.rbi.org.in",
+          "source_name": "Reserve Bank of India"
+        },
+        {
+          "pair": "INR/CNY",
+          "value": 11.65,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.rbi.org.in",
+          "source_name": "Reserve Bank of India"
+        },
+        {
+          "pair": "INR/INR",
+          "value": 1,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.rbi.org.in",
+          "source_name": "Reserve Bank of India"
+        },
+        {
+          "pair": "INR/BRL",
+          "value": 16.9,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.rbi.org.in",
+          "source_name": "Reserve Bank of India"
+        }
+      ],
+      "currency_index": {
+        "sources": null,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "bond_yield_10y": {
+        "sources": [
+          {
+            "value": 7.2,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://tradingeconomics.com/india/government-bond-yield",
+            "source_name": "Trading Economics"
+          },
+          {
+            "value": 7.2,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://economictimes.indiatimes.com/markets/bonds/india-10-year-bond-yield",
+            "source_name": "Economic Times"
+          }
+        ],
+        "average": 7.2,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      }
+    },
+    "JP": {
+      "policy_rate": {
+        "sources": [
+          {
+            "value": -0.1,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.boj.or.jp/en/statistics/boj/other/int/index.htm",
+            "source_name": "Bank of Japan"
+          },
+          {
+            "value": -0.1,
+            "date": "2025-08-09",
+            "unit": "RATE_PCT",
+            "source_url": "https://tradingeconomics.com/japan/interest-rate",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": -0.1,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      },
+      "inflation": {
+        "sources": [
+          {
+            "value": 1.2,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://www.stat.go.jp/english/data/cpi/index.html",
+            "source_name": "Statistics Bureau of Japan"
+          },
+          {
+            "value": 1.2,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://tradingeconomics.com/japan/inflation-cpi",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 1.2,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "unemployment": {
+        "sources": [
+          {
+            "value": 2.9,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://www.stat.go.jp/english/data/roudou/results/month/index.html",
+            "source_name": "Statistics Bureau of Japan"
+          },
+          {
+            "value": 2.9,
+            "date": "2025-07-31",
+            "unit": "PERCENT",
+            "source_url": "https://tradingeconomics.com/japan/unemployment-rate",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 2.9,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "pmi": {
+        "sources": [
+          {
+            "value": 52.5,
+            "date": "2025-08-05",
+            "unit": "POINTS",
+            "source_url": "https://www.au.jibunbank.co.jp/pmisurvey-composite",
+            "source_name": "Jibun Bank"
+          },
+          {
+            "value": 52.5,
+            "date": "2025-08-05",
+            "unit": "POINTS",
+            "source_url": "https://tradingeconomics.com/japan/composite-pmi",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 52.5,
+        "unit": "POINTS",
+        "status": "UNKNOWN"
+      },
+      "equity_index": {
+        "sources": [
+          {
+            "value": 32500,
+            "date": "2025-08-09",
+            "unit": "INDEX",
+            "source_url": "https://www.nikkei.com/markets/kabu/",
+            "source_name": "Nikkei 225 Index"
+          },
+          {
+            "value": 32500,
+            "date": "2025-08-09",
+            "unit": "INDEX",
+            "source_url": "https://tradingeconomics.com/japan/stock-market",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 32500,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "fx_rates": [
+        {
+          "pair": "JPY/USD",
+          "value": 0.0071,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.xe.com/currencyconverter/convert/?Amount=1\u0026From=JPY\u0026To=USD",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "JPY/EUR",
+          "value": 0.0066,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.xe.com/currencyconverter/convert/?Amount=1\u0026From=JPY\u0026To=EUR",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "JPY/GBP",
+          "value": 0.0057,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.xe.com/currencyconverter/convert/?Amount=1\u0026From=JPY\u0026To=GBP",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "JPY/CNY",
+          "value": 0.051,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.xe.com/currencyconverter/convert/?Amount=1\u0026From=JPY\u0026To=CNY",
+          "source_name": "XE.com"
+        },
+        {
+          "pair": "JPY/INR",
+          "value": 0.53,
+          "as_of": "2025-08-09T00:00:00Z",
+          "source_url": "https://www.xe.com/currencyconverter/convert/?Amount=1\u0026From=JPY\u0026To=INR",
+          "source_name": "XE.com"
+        }
+      ],
+      "currency_index": {
+        "sources": null,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "bond_yield_10y": {
+        "sources": [
+          {
+            "value": 0.5,
+            "date": "2025-08-09",
+            "unit": "PERCENT",
+            "source_url": "https://www.boj.or.jp/en/mopo/market/jgbcm.htm/",
+            "source_name": "Bank of Japan"
+          },
+          {
+            "value": 0.5,
+            "date": "2025-08-09",
+            "unit": "PERCENT",
+            "source_url": "https://tradingeconomics.com/japan/government-bond-yield",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 0.5,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      }
+    },
+    "US": {
+      "policy_rate": {
+        "sources": [
+          {
+            "value": 5.5,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.federalreserve.gov/monetarypolicy/openmarket.htm",
+            "source_name": "U.S. Federal Reserve"
+          },
+          {
+            "value": 5.5,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.bloomberg.com/markets/rates-bonds",
+            "source_name": "Bloomberg"
+          }
+        ],
+        "average": 5.5,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      },
+      "inflation": {
+        "sources": [
+          {
+            "value": 3.2,
+            "date": "2025-08-01",
+            "unit": "PERCENT",
+            "source_url": "https://www.bls.gov/cpi/latest-numbers.htm",
+            "source_name": "U.S. Bureau of Labor Statistics"
+          },
+          {
+            "value": 3.2,
+            "date": "2025-08-01",
+            "unit": "PERCENT",
+            "source_url": "https://www.reuters.com/markets/us",
+            "source_name": "Reuters"
+          }
+        ],
+        "average": 3.2,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "unemployment": {
+        "sources": [
+          {
+            "value": 4.1,
+            "date": "2025-07-01",
+            "unit": "PERCENT",
+            "source_url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+            "source_name": "U.S. Bureau of Labor Statistics"
+          },
+          {
+            "value": 4.1,
+            "date": "2025-07-01",
+            "unit": "PERCENT",
+            "source_url": "https://www.cnbc.com/2025/08/us-jobs-report.html",
+            "source_name": "CNBC"
+          }
+        ],
+        "average": 4.1,
+        "unit": "PERCENT",
+        "status": "UNKNOWN"
+      },
+      "pmi": {
+        "sources": [
+          {
+            "value": 51.5,
+            "date": "2025-08-01",
+            "unit": "POINTS",
+            "source_url": "https://www.ismworld.org/supply-management-news-and-reports/reports/ism-report-on-business/pmi/",
+            "source_name": "Institute for Supply Management"
+          },
+          {
+            "value": 51.5,
+            "date": "2025-08-01",
+            "unit": "POINTS",
+            "source_url": "https://tradingeconomics.com/united-states/business-confidence",
+            "source_name": "Trading Economics"
+          }
+        ],
+        "average": 51.5,
+        "unit": "POINTS",
+        "status": "UNKNOWN"
+      },
+      "equity_index": {
+        "sources": [
+          {
+            "value": 4500,
+            "date": "2025-08-09",
+            "unit": "INDEX",
+            "source_url": "https://www.wsj.com/market-data/stocks/us",
+            "source_name": "Wall Street Journal"
+          },
+          {
+            "value": 4500,
+            "date": "2025-08-09",
+            "unit": "INDEX",
+            "source_url": "https://finance.yahoo.com/quote/%5EGSPC/history",
+            "source_name": "Yahoo Finance"
+          }
+        ],
+        "average": 4500,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "fx_rates": [
+        {
+          "pair": "USD/EUR",
+          "value": 0.92,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.xe.com/currencycharts/?from=USD\u0026to=EUR",
+          "source_name": "XE"
+        },
+        {
+          "pair": "USD/JPY",
+          "value": 142,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.reuters.com/markets/currencies/japan-yen",
+          "source_name": "Reuters"
+        },
+        {
+          "pair": "USD/GBP",
+          "value": 0.78,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.ft.com/currencies",
+          "source_name": "Financial Times"
+        },
+        {
+          "pair": "USD/CNY",
+          "value": 7.1,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.oanda.com/currency-converter/en/?from=USD\u0026to=CNY",
+          "source_name": "OANDA"
+        },
+        {
+          "pair": "USD/INR",
+          "value": 82.5,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.investing.com/currencies/usd-inr",
+          "source_name": "Investing.com"
+        },
+        {
+          "pair": "USD/BRL",
+          "value": 5,
+          "as_of": "2025-08-10T00:00:00Z",
+          "source_url": "https://www.bloomberg.com/markets/currencies",
+          "source_name": "Bloomberg"
+        }
+      ],
+      "currency_index": {
+        "sources": [
+          {
+            "value": 102.5,
+            "date": "2025-08-09",
+            "unit": "INDEX",
+            "source_url": "https://www.investing.com/indices/usdollar-index",
+            "source_name": "Investing.com"
+          },
+          {
+            "value": 102.5,
+            "date": "2025-08-09",
+            "unit": "INDEX",
+            "source_url": "https://fred.stlouisfed.org/series/DTWEXBGS",
+            "source_name": "Federal Reserve Economic Data (FRED)"
+          }
+        ],
+        "average": 102.5,
+        "unit": "INDEX",
+        "status": "UNKNOWN"
+      },
+      "bond_yield_10y": {
+        "sources": [
+          {
+            "value": 4,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.treasury.gov/resource-center/data-chart-center/interest-rates/Pages/TextView.aspx?data=yield",
+            "source_name": "U.S. Department of the Treasury"
+          },
+          {
+            "value": 4,
+            "date": "2025-08-10",
+            "unit": "RATE_PCT",
+            "source_url": "https://www.marketwatch.com/investing/bond/tmubmusd10y",
+            "source_name": "MarketWatch"
+          }
+        ],
+        "average": 4,
+        "unit": "RATE_PCT",
+        "status": "UNKNOWN"
+      }
+    }
+  },
+  "summary": {
+    "summary": "Globally, policy rates remain elevated, especially in Brazil and the US, to combat inflation levels that mostly exceed central bank targets, except in Japan where rates are negative and inflation is subdued. Germany's PMI indicates a contraction, while most other countries are experiencing expansion, with particularly strong PMI in the UK. Unemployment varies significantly across nations, with the highest in Brazil and France. Bond yields are highest in Brazil, indicating potential fiscal concerns, while Germany has the lowest yields among major economies.",
+    "tip": "Focus on regions with expanding PMI like the UK for growth opportunities, and monitor Brazil's high bond yields for potential risks."
+  }
+}
