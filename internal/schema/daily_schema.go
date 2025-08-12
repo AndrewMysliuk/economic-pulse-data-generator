@@ -103,6 +103,8 @@ func PtrVal(v *float64) float64 {
 	return *v
 }
 
+func PtrValReverse(f float64) *float64 { return &f }
+
 func NewEmptyMetric(unit metric_unit.MetricUnit) MetricDaily {
 	return MetricDaily{
 		Sources: nil,

@@ -4,9 +4,10 @@ import (
 	"log"
 	"os"
 
+	"github.com/joho/godotenv"
+
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/core"
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/llm"
-	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -26,6 +27,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("generation failed: %v", err)
 	}
+
+	// if err := scraper.Scrape("US"); err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	log.Println("Generation complete")
 }
