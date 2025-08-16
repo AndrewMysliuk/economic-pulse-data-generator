@@ -69,7 +69,7 @@ func Generate(llmClient llm.LLMClient) error {
 			cm.CurrencyIndex.ComputeAverage()
 			cm.BondYield10Y.ComputeAverage()
 
-			setStatusesFromAverages(iso, &cm)
+			status_range.SetStatusesFromAverages(iso, &cm)
 
 			log.Printf(
 				"SCRAPE country=%s OK | policy_rate=%.2f | inflation=%.2f | unemployment=%.2f",
@@ -125,35 +125,4 @@ func saveJSON(data schema.DailyData) error {
 	enc := json.NewEncoder(file)
 	enc.SetIndent("", "  ")
 	return enc.Encode(data)
-}
-
-func setStatusesFromAverages(iso string, cm *schema.CountryMetrics) {
-	thresholds, ok := status_range.ByISO[iso]
-	if !ok {
-		return
-	}
-
-	if cm.PolicyRate.Average != nil {
-		cm.PolicyRate.Status = thresholds.PolicyRate.StatusForValue(*cm.PolicyRate.Average)
-	}
-
-	if cm.Inflation.Average != nil {
-		cm.Inflation.Status = thresholds.Inflation.StatusForValue(*cm.Inflation.Average)
-	}
-
-	if cm.Unemployment.Average != nil {
-		cm.Unemployment.Status = thresholds.Unemployment.StatusForValue(*cm.Unemployment.Average)
-	}
-
-	if cm.PMI.Average != nil {
-		cm.PMI.Status = thresholds.PMI.StatusForValue(*cm.PMI.Average)
-	}
-
-	if cm.EquityIndex.Average != nil {
-		cm.EquityIndex.Status = thresholds.EquityYoY.StatusForValue(*cm.EquityIndex.Average)
-	}
-
-	if cm.BondYield10Y.Average != nil {
-		cm.BondYield10Y.Status = thresholds.Bond10Y.StatusForValue(*cm.BondYield10Y.Average)
-	}
 }
