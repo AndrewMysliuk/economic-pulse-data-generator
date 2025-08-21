@@ -16,25 +16,25 @@ import (
 )
 
 var inputCountries = []string{
-	"usa",
-	"china",
+	// "usa",
+	// "china",
 	"germany",
-	"japan",
-	"uk",
-	"france",
-	"india",
-	"brazil",
+	// "japan",
+	// "uk",
+	// "france",
+	// "india",
+	// "brazil",
 }
 
 var countryISO = map[string]string{
-	"usa":     "US",
-	"china":   "CN",
+	// "usa":     "US",
+	// "china":   "CN",
 	"germany": "DE",
-	"japan":   "JP",
-	"uk":      "GB",
-	"france":  "FR",
-	"india":   "IN",
-	"brazil":  "BR",
+	// "japan":   "JP",
+	// "uk":      "GB",
+	// "france":  "FR",
+	// "india":   "IN",
+	// "brazil":  "BR",
 }
 
 func Generate(llmClient llm.LLMClient) error {
@@ -98,11 +98,6 @@ func Generate(llmClient llm.LLMClient) error {
 	historyDir := filepath.Join("output", "history")
 	if err := os.MkdirAll(historyDir, 0o755); err != nil {
 		return err
-	}
-
-	historyPath := filepath.Join(historyDir, "history_180.json")
-	if err := UpdateHistoryIncremental(historyPath, "output"); err != nil {
-		log.Printf("failed to update history: %v", err)
 	}
 
 	log.Printf("Data generated for %s and saved.\n", today)
