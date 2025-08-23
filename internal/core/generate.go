@@ -12,7 +12,6 @@ import (
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/llm"
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema"
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/scraper"
-	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/utils/status_range"
 )
 
 var inputCountries = []string{
@@ -61,22 +60,9 @@ func Generate(llmClient llm.LLMClient) error {
 		} else {
 			schema.MergeCountryMetrics(&cm, &scraped)
 
-			cm.PolicyRate.ComputeAverage()
-			cm.Inflation.ComputeAverage()
-			cm.Unemployment.ComputeAverage()
-			cm.PMI.ComputeAverage()
-			cm.EquityIndex.ComputeAverage()
-			cm.CurrencyIndex.ComputeAverage()
-			cm.BondYield10Y.ComputeAverage()
-
-			status_range.SetStatusesFromAverages(iso, &cm)
-
 			log.Printf(
-				"SCRAPE country=%s OK | policy_rate=%.2f | inflation=%.2f | unemployment=%.2f",
+				"SCRAPE country=%s OK",
 				iso,
-				schema.PtrVal(cm.PolicyRate.Average),
-				schema.PtrVal(cm.Inflation.Average),
-				schema.PtrVal(cm.Unemployment.Average),
 			)
 		}
 

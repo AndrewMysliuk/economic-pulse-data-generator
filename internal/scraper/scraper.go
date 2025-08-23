@@ -16,6 +16,7 @@ import (
 	"github.com/chromedp/chromedp"
 
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema"
+	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema/enum/metric_status"
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema/enum/metric_unit"
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/utils/parsed_links"
 )
@@ -43,20 +44,7 @@ func Scrape(countryISO string) (schema.CountryMetrics, error) {
 	r.scrape("Unemployment", cfg.Unemployment)
 	r.scrape("PMI", cfg.PMI)
 	r.scrape("EquityIndex", cfg.EquityIndex)
-
-	for pair, ml := range cfg.Currencies {
-		r.scrape("FX "+pair, ml)
-	}
-
 	r.scrape("Bond10Y", cfg.Bond10Y)
-
-	result.PolicyRate.ComputeAverage()
-	result.Inflation.ComputeAverage()
-	result.Unemployment.ComputeAverage()
-	result.PMI.ComputeAverage()
-	result.EquityIndex.ComputeAverage()
-	result.CurrencyIndex.ComputeAverage()
-	result.BondYield10Y.ComputeAverage()
 
 	return result, nil
 }
@@ -150,6 +138,7 @@ func (r *runner) scrape(name string, ml parsed_links.MetricLink) {
 	if ml.URL == "" || ml.Selector == "" {
 		return
 	}
+
 	var val float64
 	err := withRetry(3, 700*time.Millisecond, func() error {
 		tabCtx, tabCancel := chromedp.NewContext(r.root)
@@ -166,54 +155,66 @@ func (r *runner) scrape(name string, ml parsed_links.MetricLink) {
 		return nil
 	})
 	if err != nil {
-		log.Printf("%-15s ERROR: %v", name, err)
+		log.Printf("%-25s ERROR: %v", name, err)
 		return
 	}
 
-	switch {
-	case name == "PolicyRate":
-		r.result.PolicyRate.Sources = []schema.MetricSource{
-			r.src(val, metric_unit.RatePct, ml.URL, "Policy rate"),
-		}
+	source := schema.MetricSource{
+		Value:      &val,
+		Unit:       metric_unit.ResolveUnit(name),
+		SourceUrl:  ml.URL,
+		SourceName: name,
+		Raw:        fmt.Sprintf("%v", val),
+	}
 
-	case name == "Inflation":
-		r.result.Inflation.Sources = []schema.MetricSource{
-			r.src(val, metric_unit.Percent, ml.URL, "CPI YoY"),
-		}
+	metric := schema.MetricDaily{
+		Sources: source,
+		Status:  metric_status.Unknown,
+	}
 
-	case name == "Unemployment":
-		r.result.Unemployment.Sources = []schema.MetricSource{
-			r.src(val, metric_unit.Percent, ml.URL, "Unemployment"),
-		}
-
-	case name == "PMI":
-		r.result.PMI.Sources = []schema.MetricSource{
-			r.src(val, metric_unit.Index, ml.URL, "PMI / Business confidence"),
-		}
-
-	case name == "EquityIndex":
-		r.result.EquityIndex.Sources = []schema.MetricSource{
-			r.src(val, metric_unit.Index, ml.URL, "Equity index"),
-		}
-		r.result.EquityIndex.AsOf = r.asOf
-
-	case name == "Bond10Y":
-		r.result.BondYield10Y.Sources = []schema.MetricSource{
-			r.src(val, metric_unit.Percent, ml.URL, "10Y Gov Yield"),
-		}
-		r.result.BondYield10Y.AsOf = r.asOf
-
-	case strings.HasPrefix(name, "FX "):
-		pair := strings.TrimPrefix(name, "FX ")
-		fx := schema.FxRate{
-			Pair:       pair,
-			Value:      val,
-			AsOf:       r.asOf,
-			SourceUrl:  ml.URL,
-			SourceName: lastPathSegment(ml.URL),
-		}
-		_ = fx.Validate()
-		r.result.FxRates = append(r.result.FxRates, fx)
+	switch name {
+	case "PolicyRate":
+		r.result.MacroPolicyRatePercent = metric
+	case "Inflation":
+		r.result.MacroInflationCPIYoYPercent = metric
+	case "Unemployment":
+		r.result.MacroUnemploymentRatePercent = metric
+	case "PMI":
+		r.result.MacroPMIIndex = metric
+	case "Bond10Y":
+		r.result.MacroBondYield10YPercent = metric
+	case "GDP":
+		r.result.MacroGDPGrowthForecastPercent = metric
+	case "NetSalary":
+		r.result.IncomeAverageNetMonthlyEUR = metric
+	case "LivingWage":
+		r.result.IncomeLivingWageEstimateEUR = metric
+	case "PriceCapital":
+		r.result.RealEstatePriceCapitalUSDPerM2 = metric
+	case "PriceRegional":
+		r.result.RealEstatePriceRegionalUSDPerM2 = metric
+	case "PriceChangeYoY":
+		r.result.RealEstatePriceChangeYoYPercent = metric
+	case "RentalYield":
+		r.result.RealEstateRentalYieldPercent = metric
+	case "ShareManufacturing":
+		r.result.EconStructShareManufacturingPercent = metric
+	case "ShareFinance":
+		r.result.EconStructShareInfoFinancialServicesPercent = metric
+	case "ShareLogistics":
+		r.result.EconStructShareTradeLogisticsPercent = metric
+	case "ShareOther":
+		r.result.EconStructShareOtherSectorsPercent = metric
+	case "Population":
+		r.result.SocietyPopulationMillion = metric
+	case "BirthRate":
+		r.result.SocietyBirthRatePerWoman = metric
+	case "Corruption":
+		r.result.SocietyCorruptionIndex100Scale = metric
+	case "PoliticalStability":
+		r.result.SocietyPoliticalStabilityRating = metric
+	default:
+		log.Printf("WARN: unknown metric name %q", name)
 	}
 
 	sleepJitter(700*time.Millisecond, 200*time.Millisecond, 400*time.Millisecond)
@@ -223,7 +224,6 @@ func (r *runner) src(val float64, unit metric_unit.MetricUnit, url, name string)
 	v := val
 	return schema.MetricSource{
 		Value:      &v,
-		Date:       r.asOf[:10],
 		Unit:       unit,
 		SourceUrl:  url,
 		SourceName: name,

@@ -50,3 +50,29 @@ func New(str string) (MetricUnit, error) {
 func Values() []MetricUnit {
 	return []MetricUnit{Percent, Index, Points, Level, RatePct}
 }
+
+func ResolveUnit(name string) MetricUnit {
+	switch name {
+	case "PolicyRate":
+		return RatePct
+	case "Inflation", "Unemployment", "Bond10Y", "GDP", "PriceChangeYoY", "RentalYield",
+		"ShareManufacturing", "ShareFinance", "ShareLogistics", "ShareOther":
+		return Percent
+	case "PMI":
+		return Index
+	case "NetSalary", "LivingWage":
+		return Level // может сделать EUR_PER_MONTH отдельно, если критично
+	case "PriceCapital", "PriceRegional":
+		return Level // или завести "USD_PER_M2" кастомно
+	case "Population":
+		return Level // в миллионах — либо завести MILLION
+	case "BirthRate":
+		return Level // per woman
+	case "Corruption":
+		return Index
+	case "PoliticalStability":
+		return Level // или завести TEXT_SCORE
+	default:
+		return Level
+	}
+}

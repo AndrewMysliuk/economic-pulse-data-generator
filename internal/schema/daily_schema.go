@@ -1,50 +1,55 @@
 package schema
 
 import (
-	"regexp"
-
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema/enum/metric_status"
 	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/schema/enum/metric_unit"
-	"github.com/pkg/errors"
-)
-
-var (
-	FX_PAIR_REGEXP = regexp.MustCompile(`^[A-Z]{3}/[A-Z]{3}$`)
 )
 
 type MetricSource struct {
-	Value      *float64               `json:"value"`       // число; nil если не достали/невалидно
-	Date       string                 `json:"date"`        // YYYY-MM-DD — дата наблюдения
-	Unit       metric_unit.MetricUnit `json:"unit"`        // "%", "index", "points" и т.п.
-	SourceUrl  string                 `json:"source_url"`  // первоисточник (полный URL или короткий id)
-	SourceName string                 `json:"source_name"` // человекочитаемое имя источника/серии
+	Value      *float64               `json:"value,omitempty"` // Число, если точное значение
+	From       *float64               `json:"from,omitempty"`  // Начало диапазона
+	To         *float64               `json:"to,omitempty"`    // Конец диапазона
+	Unit       metric_unit.MetricUnit `json:"unit"`            // "%", "$/m²", "€/month", и т.п.
+	SourceUrl  string                 `json:"source_url"`      // Полная ссылка или ID
+	SourceName string                 `json:"source_name"`     // Название источника
+	Raw        string                 `json:"raw"`             // Оригинальное строковое значение (например, "€2,800 – €3,300 /month")
 }
 
 type MetricDaily struct {
-	Sources []MetricSource             `json:"sources"`           // 1..N источников
-	Average *float64                   `json:"average,omitempty"` // простой avg; опционально (если 1 источник — можно не ставить)
-	Unit    metric_unit.MetricUnit     `json:"unit"`              // итоговая единица для UI (должна совпадать с источниками)
-	Status  metric_status.MetricStatus `json:"status"`            // выставляется твоей логикой порогов
-	AsOf    string                     `json:"as_of,omitempty"`   // ISO datetime (UTC), актуально для рынков/дневных серий
-}
-
-type FxRate struct {
-	Pair       string  `json:"pair"`        // конвенция: "USD/EUR" = EUR за 1 USD
-	Value      float64 `json:"value"`       // EUR per 1 USD
-	AsOf       string  `json:"as_of"`       // ISO datetime (UTC)
-	SourceUrl  string  `json:"source_url"`  // источник (Fed H.10, ECB и т.п.)
-	SourceName string  `json:"source_name"` // человекочитаемое имя источника
+	Sources MetricSource               `json:"sources"` // 1..N источников
+	Status  metric_status.MetricStatus `json:"status"`  // выставляется твоей логикой порогов
 }
 
 type CountryMetrics struct {
-	PolicyRate    MetricDaily `json:"policy_rate"`    // ключевая/бенчмарк ставка
-	Inflation     MetricDaily `json:"inflation"`      // headline CPI YoY %
-	Unemployment  MetricDaily `json:"unemployment"`   // U-3 SA % или местный аналог
-	PMI           MetricDaily `json:"pmi"`            // Composite по умолчанию (тип можно уточнять в SourceName)
-	EquityIndex   MetricDaily `json:"equity_index"`   // основной фондовый индекс страны (уровень)
-	FxRates       []FxRate    `json:"fx_rates"`       // FX пары по конвенции выше
-	CurrencyIndex MetricDaily `json:"currency_index"` // если неприменимо — держи status=unknown, sources=[]
-	BondYield10Y  MetricDaily `json:"bond_yield_10y"` // 10Y gov yield, % годовых
+	// Income & Living
+	IncomeAverageNetMonthlyEUR  MetricDaily `json:"income_average_net_monthly_eur"`
+	IncomeLivingWageEstimateEUR MetricDaily `json:"income_living_wage_estimate_eur"`
+
+	// Real Estate
+	RealEstatePriceCapitalUSDPerM2  MetricDaily `json:"real_estate_price_capital_usd_per_m2"`
+	RealEstatePriceRegionalUSDPerM2 MetricDaily `json:"real_estate_price_regional_usd_per_m2"`
+	RealEstatePriceChangeYoYPercent MetricDaily `json:"real_estate_price_change_yoy_percent"`
+	RealEstateRentalYieldPercent    MetricDaily `json:"real_estate_rental_yield_percent"`
+
+	// Macroeconomics
+	MacroPolicyRatePercent        MetricDaily `json:"macro_policy_rate_percent"`
+	MacroInflationCPIYoYPercent   MetricDaily `json:"macro_inflation_cpi_yoy_percent"`
+	MacroUnemploymentRatePercent  MetricDaily `json:"macro_unemployment_rate_percent"`
+	MacroPMIIndex                 MetricDaily `json:"macro_pmi_index"`
+	MacroBondYield10YPercent      MetricDaily `json:"macro_bond_yield_10y_percent"`
+	MacroGDPGrowthForecastPercent MetricDaily `json:"macro_gdp_growth_forecast_percent"`
+
+	// Economic Structure (Sector Shares)
+	EconStructShareManufacturingPercent         MetricDaily `json:"econ_struct_share_manufacturing_percent"`
+	EconStructShareInfoFinancialServicesPercent MetricDaily `json:"econ_struct_share_info_financial_services_percent"`
+	EconStructShareTradeLogisticsPercent        MetricDaily `json:"econ_struct_share_trade_logistics_percent"`
+	EconStructShareOtherSectorsPercent          MetricDaily `json:"econ_struct_share_other_sectors_percent"`
+
+	// Society & Politics
+	SocietyPopulationMillion        MetricDaily `json:"society_population_million"`
+	SocietyBirthRatePerWoman        MetricDaily `json:"society_birth_rate_per_woman"`
+	SocietyCorruptionIndex100Scale  MetricDaily `json:"society_corruption_index_100_scale"`
+	SocietyPoliticalStabilityRating MetricDaily `json:"society_political_stability_rating"`
 }
 
 type StructuredLLMResponse struct {
@@ -58,44 +63,6 @@ type DailyData struct {
 	Summary   StructuredLLMResponse     `json:"summary"`   // общая сводка
 }
 
-func (m MetricDaily) ValidateUnits() error {
-	for i := range m.Sources {
-		if m.Sources[i].Unit != m.Unit {
-			return errors.Errorf("unit mismatch: daily=%s source[%d]=%s", m.Unit, i, m.Sources[i].Unit)
-		}
-	}
-	return nil
-}
-
-func (m *MetricDaily) ComputeAverage() {
-	valid := make([]float64, 0, len(m.Sources))
-	for _, s := range m.Sources {
-		if s.Value != nil {
-			valid = append(valid, *s.Value)
-		}
-	}
-	if len(valid) == 0 {
-		m.Average = nil
-		return
-	}
-	sum := 0.0
-	for _, v := range valid {
-		sum += v
-	}
-	avg := sum / float64(len(valid))
-	m.Average = &avg
-}
-
-func (fx FxRate) Validate() error {
-	if !FX_PAIR_REGEXP.MatchString(fx.Pair) {
-		return errors.Errorf("invalid pair: %s", fx.Pair)
-	}
-	if fx.SourceUrl == "" || fx.SourceName == "" {
-		return errors.New("source_url/source_name required")
-	}
-	return nil
-}
-
 func PtrVal(v *float64) float64 {
 	if v == nil {
 		return 0
@@ -107,22 +74,50 @@ func PtrValReverse(f float64) *float64 { return &f }
 
 func NewEmptyMetric(unit metric_unit.MetricUnit) MetricDaily {
 	return MetricDaily{
-		Sources: nil,
-		Average: nil,
-		Unit:    unit,
-		Status:  metric_status.Unknown,
+		Sources: MetricSource{
+			Value:      nil,
+			From:       nil,
+			To:         nil,
+			Unit:       unit,
+			SourceUrl:  "",
+			SourceName: "",
+			Raw:        "",
+		},
+		Status: metric_status.Unknown,
 	}
 }
 
 func InitEmptyCountryMetrics() CountryMetrics {
 	return CountryMetrics{
-		PolicyRate:    NewEmptyMetric(metric_unit.RatePct),
-		Inflation:     NewEmptyMetric(metric_unit.Percent),
-		Unemployment:  NewEmptyMetric(metric_unit.Percent),
-		PMI:           NewEmptyMetric(metric_unit.Index),
-		EquityIndex:   NewEmptyMetric(metric_unit.Index),
-		CurrencyIndex: NewEmptyMetric(metric_unit.Index),
-		BondYield10Y:  NewEmptyMetric(metric_unit.Percent),
+		// Income & Living
+		IncomeAverageNetMonthlyEUR:  NewEmptyMetric(metric_unit.Level),
+		IncomeLivingWageEstimateEUR: NewEmptyMetric(metric_unit.Level),
+
+		// Real Estate
+		RealEstatePriceCapitalUSDPerM2:  NewEmptyMetric(metric_unit.Level),
+		RealEstatePriceRegionalUSDPerM2: NewEmptyMetric(metric_unit.Level),
+		RealEstatePriceChangeYoYPercent: NewEmptyMetric(metric_unit.Percent),
+		RealEstateRentalYieldPercent:    NewEmptyMetric(metric_unit.Percent),
+
+		// Macroeconomics
+		MacroPolicyRatePercent:        NewEmptyMetric(metric_unit.RatePct),
+		MacroInflationCPIYoYPercent:   NewEmptyMetric(metric_unit.Percent),
+		MacroUnemploymentRatePercent:  NewEmptyMetric(metric_unit.Percent),
+		MacroPMIIndex:                 NewEmptyMetric(metric_unit.Index),
+		MacroBondYield10YPercent:      NewEmptyMetric(metric_unit.Percent),
+		MacroGDPGrowthForecastPercent: NewEmptyMetric(metric_unit.Percent),
+
+		// Economic Structure
+		EconStructShareManufacturingPercent:         NewEmptyMetric(metric_unit.Percent),
+		EconStructShareInfoFinancialServicesPercent: NewEmptyMetric(metric_unit.Percent),
+		EconStructShareTradeLogisticsPercent:        NewEmptyMetric(metric_unit.Percent),
+		EconStructShareOtherSectorsPercent:          NewEmptyMetric(metric_unit.Percent),
+
+		// Society & Politics
+		SocietyPopulationMillion:        NewEmptyMetric(metric_unit.Level),
+		SocietyBirthRatePerWoman:        NewEmptyMetric(metric_unit.Level),
+		SocietyCorruptionIndex100Scale:  NewEmptyMetric(metric_unit.Index),
+		SocietyPoliticalStabilityRating: NewEmptyMetric(metric_unit.Level),
 	}
 }
 
@@ -130,25 +125,39 @@ func MergeMetric(dst *MetricDaily, src *MetricDaily) {
 	if src == nil {
 		return
 	}
-	if len(src.Sources) > 0 {
+
+	if src.Sources.Raw != "" || src.Sources.Value != nil || src.Sources.From != nil || src.Sources.To != nil {
 		dst.Sources = src.Sources
 	}
 
-	if src.Unit != "" {
-		dst.Unit = src.Unit
+	if src.Status != "" {
+		dst.Status = src.Status
 	}
 }
 
 func MergeCountryMetrics(dst, src *CountryMetrics) {
-	MergeMetric(&dst.PolicyRate, &src.PolicyRate)
-	MergeMetric(&dst.Inflation, &src.Inflation)
-	MergeMetric(&dst.Unemployment, &src.Unemployment)
-	MergeMetric(&dst.PMI, &src.PMI)
-	MergeMetric(&dst.EquityIndex, &src.EquityIndex)
-	MergeMetric(&dst.CurrencyIndex, &src.CurrencyIndex)
-	MergeMetric(&dst.BondYield10Y, &src.BondYield10Y)
+	MergeMetric(&dst.IncomeAverageNetMonthlyEUR, &src.IncomeAverageNetMonthlyEUR)
+	MergeMetric(&dst.IncomeLivingWageEstimateEUR, &src.IncomeLivingWageEstimateEUR)
 
-	if len(src.FxRates) > 0 {
-		dst.FxRates = src.FxRates
-	}
+	MergeMetric(&dst.RealEstatePriceCapitalUSDPerM2, &src.RealEstatePriceCapitalUSDPerM2)
+	MergeMetric(&dst.RealEstatePriceRegionalUSDPerM2, &src.RealEstatePriceRegionalUSDPerM2)
+	MergeMetric(&dst.RealEstatePriceChangeYoYPercent, &src.RealEstatePriceChangeYoYPercent)
+	MergeMetric(&dst.RealEstateRentalYieldPercent, &src.RealEstateRentalYieldPercent)
+
+	MergeMetric(&dst.MacroPolicyRatePercent, &src.MacroPolicyRatePercent)
+	MergeMetric(&dst.MacroInflationCPIYoYPercent, &src.MacroInflationCPIYoYPercent)
+	MergeMetric(&dst.MacroUnemploymentRatePercent, &src.MacroUnemploymentRatePercent)
+	MergeMetric(&dst.MacroPMIIndex, &src.MacroPMIIndex)
+	MergeMetric(&dst.MacroBondYield10YPercent, &src.MacroBondYield10YPercent)
+	MergeMetric(&dst.MacroGDPGrowthForecastPercent, &src.MacroGDPGrowthForecastPercent)
+
+	MergeMetric(&dst.EconStructShareManufacturingPercent, &src.EconStructShareManufacturingPercent)
+	MergeMetric(&dst.EconStructShareInfoFinancialServicesPercent, &src.EconStructShareInfoFinancialServicesPercent)
+	MergeMetric(&dst.EconStructShareTradeLogisticsPercent, &src.EconStructShareTradeLogisticsPercent)
+	MergeMetric(&dst.EconStructShareOtherSectorsPercent, &src.EconStructShareOtherSectorsPercent)
+
+	MergeMetric(&dst.SocietyPopulationMillion, &src.SocietyPopulationMillion)
+	MergeMetric(&dst.SocietyBirthRatePerWoman, &src.SocietyBirthRatePerWoman)
+	MergeMetric(&dst.SocietyCorruptionIndex100Scale, &src.SocietyCorruptionIndex100Scale)
+	MergeMetric(&dst.SocietyPoliticalStabilityRating, &src.SocietyPoliticalStabilityRating)
 }
