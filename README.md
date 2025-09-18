@@ -1,22 +1,26 @@
-# Economic Pulse — Data Generator
+# Expath — Open Relocation Platform
 
-**Economic Pulse** is a backend utility that scrapes and aggregates key macroeconomic indicators, generates a unified JSON file, and produces a short summary using GPT-4o.  
-This data is consumed by the [Economic Pulse frontend](https://github.com/AndrewMysliuk/economic-pulse-frontend-app) as part of a static site build (SSG).
+**Expath** is an open platform that helps people evaluate relocation options through structured and comparable country data.  
+Instead of scattered guides and forums, Expath provides a clear interface with maps, country cards, and calculators.
 
 ## What It Does
 
-- Scrapes public macroeconomic data:
-  - Interest rates, inflation, unemployment, PMI, FX rates, equity indices, bond yields
-- Covers 8 key economies:
-  - US, China, Germany, Japan, UK, France, India, Brazil
-- Calls OpenAI GPT-4o with a strict JSON schema to generate:
-  - `summary`: brief economic insight
-  - `tip`: investment suggestion
-- Outputs a clean JSON file: `output/YYYY-MM-DD.json`
+- Country profiles in a unified format:
+  - Residency permits & citizenship timelines
+  - Tax regimes for freelancers, businesses, dividends
+  - Cost of living: rent, groceries, healthcare
+  - Banking & fintech availability
+  - Safety, climate, ecology indicators
+- Visual color-coded highlights:
+  - 🟢 easy / favorable  
+  - 🟡 neutral / with caveats  
+  - 🔴 difficult / costly
+- Interactive tools:
+  - Side-by-side country comparison
+  - Income calculator (net after taxes & expenses)
+  - Context based on origin country (visa rules, required docs)
 
 ## Tech Stack
 
-- Go 1.22+
-- OpenAI API (GPT-4o)
-- JSON-only output (no DB)
-- Future: async scraping, scheduled runs
+- Go 1.22+ (backend services)
+- OpenAI API (summaries & insights)

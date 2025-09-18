@@ -34,15 +34,4 @@ func main() {
 	}
 
 	fmt.Println(result)
-
-	// err = core.Generate(llmClient)
-	// if err != nil {
-	// 	log.Fatalf("generation failed: %v", err)
-	// }
-
-	// if err := scraper.Scrape("US"); err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// log.Println("Generation complete")
 }
