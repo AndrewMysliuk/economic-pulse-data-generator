@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/cost-of-living.schema.json",
+  "title": "Root",
+  "type": "object",
+  "properties": {
+    "cost_of_living": { "$ref": "#/definitions/CostOfLivingInfo" }
+  },
+  "required": ["cost_of_living"],
+  "additionalProperties": false,
+
+  "definitions": {
+    "CostOfLivingInfo": {
+      "type": "object",
+      "properties": {
+        "housing": { "$ref": "#/definitions/HousingInfo" },
+        "groceries": { "$ref": "#/definitions/GroceriesInfo" },
+        "healthcare": { "$ref": "#/definitions/HealthcareInfo" },
+        "transport": { "$ref": "#/definitions/TransportInfo" },
+        "internet": { "$ref": "#/definitions/InternetInfo" }
+      },
+      "required": ["housing", "groceries", "healthcare", "transport", "internet"],
+      "additionalProperties": false
+    },
+
+    "HousingInfo": {
+      "type": "object",
+      "properties": {
+        "cost_of_living_rent_in_capital": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_rent_in_province": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_buy_price_m2_in_capital": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_buy_price_m2_in_province": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_housing_note": { "type": "string" }
+      },
+      "required": [
+        "cost_of_living_rent_in_capital",
+        "cost_of_living_rent_in_province",
+        "cost_of_living_buy_price_m2_in_capital",
+        "cost_of_living_buy_price_m2_in_province"
+      ],
+      "additionalProperties": false
+    },
+
+    "GroceriesInfo": {
+      "type": "object",
+      "properties": {
+        "cost_of_living_groceries_monthly_basket": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_groceries_family_basket": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_groceries_index": { "type": "integer" },
+        "cost_of_living_groceries_note": { "type": "string" }
+      },
+      "required": ["cost_of_living_groceries_monthly_basket", "cost_of_living_groceries_family_basket", "cost_of_living_groceries_index"],
+      "additionalProperties": false
+    },
+
+    "HealthcareInfo": {
+      "type": "object",
+      "properties": {
+        "is_healthcare_available": { "type": "boolean" },
+        "cost_of_living_healthcare_insurance_monthly": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_healthcare_doctor_visit": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_healthcare_note": { "type": "string" }
+      },
+      "required": ["is_healthcare_available", "cost_of_living_healthcare_insurance_monthly", "cost_of_living_healthcare_doctor_visit"],
+      "additionalProperties": false
+    },
+
+    "TransportInfo": {
+      "type": "object",
+      "properties": {
+        "is_transport_available": { "type": "boolean" },
+        "cost_of_living_transport_public_monthly_pass": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_transport_gasoline_liter": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_transport_taxi_start": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_transport_note": { "type": "string" }
+      },
+      "required": [
+        "is_transport_available",
+        "cost_of_living_transport_public_monthly_pass",
+        "cost_of_living_transport_gasoline_liter",
+        "cost_of_living_transport_taxi_start"
+      ],
+      "additionalProperties": false
+    },
+
+    "InternetInfo": {
+      "type": "object",
+      "properties": {
+        "is_internet_available": { "type": "boolean" },
+        "cost_of_living_internet_home_monthly": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_internet_mobile_monthly": { "$ref": "#/definitions/RangeOrMoney" },
+        "cost_of_living_internet_note": { "type": "string" }
+      },
+      "required": ["is_internet_available", "cost_of_living_internet_home_monthly", "cost_of_living_internet_mobile_monthly"],
+      "additionalProperties": false
+    },
+
+    "RangeOrMoney": {
+      "type": "object",
+      "properties": {
+        "value": { "$ref": "#/definitions/Money" },
+        "min": { "$ref": "#/definitions/Money" },
+        "max": { "$ref": "#/definitions/Money" },
+        "is_unlimited": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "Money": {
+      "type": "object",
+      "properties": {
+        "currency": { "type": "string" },
+        "amount": { "type": "number" }
+      },
+      "required": ["currency", "amount"],
+      "additionalProperties": false
+    }
+  }
+}

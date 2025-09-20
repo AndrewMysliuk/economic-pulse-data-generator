@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/finance.schema.json",
+  "title": "Root",
+  "type": "object",
+  "properties": {
+    "finance": { "$ref": "#/definitions/FinanceInfo" }
+  },
+  "required": ["finance"],
+  "additionalProperties": false,
+
+  "definitions": {
+    "FinanceInfo": {
+      "type": "object",
+      "properties": {
+        "banking": { "$ref": "#/definitions/BankingInfo" },
+        "fintech": { "$ref": "#/definitions/FintechInfo" }
+      },
+      "required": ["banking", "fintech"],
+      "additionalProperties": false
+    },
+
+    "PersonalAccount": {
+      "type": "object",
+      "properties": {
+        "is_personal_account_available": { "type": "boolean" },
+        "does_personal_account_require_residency": { "type": "boolean" },
+        "personal_account_requirements": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "personal_account_requirements_note": { "type": "string" }
+      },
+      "required": ["is_personal_account_available", "does_personal_account_require_residency"],
+      "additionalProperties": false
+    },
+
+    "BusinessAccount": {
+      "type": "object",
+      "properties": {
+        "is_business_account_available": { "type": "boolean" },
+        "does_business_account_require_local_company": { "type": "boolean" },
+        "business_account_requirements": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "business_account_requirements_note": { "type": "string" }
+      },
+      "required": ["is_business_account_available", "does_business_account_require_local_company"],
+      "additionalProperties": false
+    },
+
+    "BankingInfo": {
+      "type": "object",
+      "properties": {
+        "personal_account": { "$ref": "#/definitions/PersonalAccount" },
+        "business_account": { "$ref": "#/definitions/BusinessAccount" }
+      },
+      "required": ["personal_account", "business_account"],
+      "additionalProperties": false
+    },
+
+    "FintechServiceInfo": {
+      "type": "object",
+      "properties": {
+        "fintech_service_name": {
+          "type": "string",
+          "enum": [
+            "REVOLUT",
+            "WISE",
+            "N26",
+            "MONZO",
+            "STARLING",
+            "BIGPAY",
+            "YOUTRIP",
+            "INSTAREM",
+            "ASPIRE",
+            "TONIK",
+            "CHIME",
+            "PAYONEER",
+            "PAYPAL",
+            "OTHER",
+            "UNKNOWN"
+          ]
+        },
+        "is_fintech_service_available": { "type": "boolean" },
+        "does_fintech_service_require_residency": { "type": "boolean" },
+        "fintech_service_requirements_note": { "type": "string" },
+        "fintech_service_limitations_note": { "type": "string" }
+      },
+      "required": ["fintech_service_name", "is_fintech_service_available", "does_fintech_service_require_residency"],
+      "additionalProperties": false
+    },
+
+    "FintechInfo": {
+      "type": "object",
+      "properties": {
+        "fintech_services": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/FintechServiceInfo" }
+        },
+        "fintech_note": { "type": "string" }
+      },
+      "required": ["fintech_services"],
+      "additionalProperties": false
+    }
+  }
+}

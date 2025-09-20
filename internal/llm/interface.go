@@ -2,10 +2,19 @@ package llm
 
 import (
 	"context"
+	"encoding/json"
+
+	"github.com/AndrewMysliuk/expath-data-generator/internal/schema"
 )
 
 type LLMClient interface {
-	SearchAndSummarize(ctx context.Context, query string) (string, error)
+	CallWithSchema(ctx context.Context, query string, schema []byte) (json.RawMessage, error)
+
+	GetImmigration(ctx context.Context, country schema.CountryInfo) (*schema.ImmigrationInfo, error)
+	GetTaxes(ctx context.Context, country schema.CountryInfo) (*schema.TaxInfo, error)
+	GetFinance(ctx context.Context, country schema.CountryInfo) (*schema.FinanceInfo, error)
+	GetCostOfLiving(ctx context.Context, country schema.CountryInfo) (*schema.CostOfLivingInfo, error)
+	GetQualityOfLife(ctx context.Context, country schema.CountryInfo) (*schema.QualityOfLifeInfo, error)
 }
 
 // Инструменты агента (built-in tools):

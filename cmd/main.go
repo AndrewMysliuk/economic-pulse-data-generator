@@ -1,15 +1,12 @@
 package main
 
 import (
-	"context"
-	"fmt"
 	"log"
 	"os"
-	"time"
 
 	"github.com/joho/godotenv"
 
-	"github.com/AndrewMysliuk/economic-pulse-data-generator/internal/llm"
+	"github.com/AndrewMysliuk/expath-data-generator/internal/llm"
 )
 
 func main() {
@@ -25,13 +22,5 @@ func main() {
 
 	llmClient := llm.NewOpenAIClient(openaiKey)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-	defer cancel()
-
-	result, err := llmClient.SearchAndSummarize(ctx, "Актуальные новости Германии по экономике, 3 штуки, укажи дату каждой новости")
-	if err != nil {
-		log.Fatalf("web search failed: %v", err)
-	}
-
-	fmt.Println(result)
+	_ = llmClient
 }

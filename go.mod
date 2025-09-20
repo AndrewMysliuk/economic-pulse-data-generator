@@ -1,8 +1,6 @@
-module github.com/AndrewMysliuk/economic-pulse-data-generator
+module github.com/AndrewMysliuk/expath-data-generator
 
 go 1.23.3
-
-require github.com/sashabaranov/go-openai v1.40.5
 
 require github.com/pkg/errors v0.9.1
 

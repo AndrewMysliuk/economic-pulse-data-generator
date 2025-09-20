@@ -1,0 +1,234 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/taxes.schema.json",
+  "title": "Root",
+  "type": "object",
+  "properties": {
+    "taxes": { "$ref": "#/definitions/TaxInfo" }
+  },
+  "required": ["taxes"],
+  "additionalProperties": false,
+
+  "definitions": {
+    "TaxInfo": {
+      "type": "object",
+      "properties": {
+        "personal_income": { "$ref": "#/definitions/PersonalIncomeTax" },
+        "freelance": { "$ref": "#/definitions/FreelanceTax" },
+        "corporate": { "$ref": "#/definitions/CorporateTax" },
+        "dividends": { "$ref": "#/definitions/DividendsTax" },
+        "vat": { "$ref": "#/definitions/VatTax" },
+        "other_taxes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/OtherTax" }
+        }
+      },
+      "required": ["personal_income", "freelance", "corporate", "dividends", "vat", "other_taxes"],
+      "additionalProperties": false
+    },
+
+    "PersonalIncomeTaxRate": {
+      "type": "object",
+      "properties": {
+        "from_income": { "$ref": "#/definitions/Money" },
+        "to_income": { "$ref": "#/definitions/Money" },
+        "rate_percent": { "type": "number" }
+      },
+      "required": ["rate_percent"],
+      "additionalProperties": false
+    },
+
+    "PersonalIncomeTax": {
+      "type": "object",
+      "properties": {
+        "is_personal_income_tax_available": { "type": "boolean" },
+        "is_personal_income_tax_progressive": { "type": "boolean" },
+        "personal_income_tax_rates": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PersonalIncomeTaxRate" }
+        },
+        "personal_income_tax_description": { "type": "string" }
+      },
+      "required": ["is_personal_income_tax_available", "is_personal_income_tax_progressive", "personal_income_tax_description"],
+      "additionalProperties": false
+    },
+
+    "FreelanceRegime": {
+      "type": "object",
+      "properties": {
+        "freelance_regime_name": { "type": "string" },
+        "freelance_regime_rate_percent": { "type": "number" },
+        "freelance_regime_income_limit": { "$ref": "#/definitions/RangeOrMoney" },
+        "freelance_regime_social_contributions": { "$ref": "#/definitions/SocialContributions" },
+        "freelance_regime_requirements_note": { "type": "string" },
+        "freelance_regime_description": { "type": "string" }
+      },
+      "required": [
+        "freelance_regime_name",
+        "freelance_regime_rate_percent",
+        "freelance_regime_social_contributions",
+        "freelance_regime_description"
+      ],
+      "additionalProperties": false
+    },
+
+    "FreelanceTax": {
+      "type": "object",
+      "properties": {
+        "is_freelance_tax_available": { "type": "boolean" },
+        "freelance_tax_regimes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/FreelanceRegime" }
+        }
+      },
+      "required": ["is_freelance_tax_available"],
+      "additionalProperties": false
+    },
+
+    "SpecialRegime": {
+      "type": "object",
+      "properties": {
+        "special_regime_name": { "type": "string" },
+        "special_regime_effective_rate_percent": { "type": "number" },
+        "special_regime_requirements_note": { "type": "string" },
+        "special_regime_description": { "type": "string" }
+      },
+      "required": ["special_regime_name", "special_regime_effective_rate_percent", "special_regime_description"],
+      "additionalProperties": false
+    },
+
+    "CorporateTax": {
+      "type": "object",
+      "properties": {
+        "is_corporate_tax_available": { "type": "boolean" },
+        "corporate_tax_rate": { "$ref": "#/definitions/RateWithConditions" },
+        "corporate_tax_special_regimes": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/SpecialRegime" }
+        },
+        "corporate_tax_description": { "type": "string" }
+      },
+      "required": ["is_corporate_tax_available", "corporate_tax_rate", "corporate_tax_description"],
+      "additionalProperties": false
+    },
+
+    "DividendsTaxRate": {
+      "type": "object",
+      "properties": {
+        "applies_to": { "type": "string" },
+        "rate_percent": { "type": "number" },
+        "conditions_note": { "type": "string" }
+      },
+      "required": ["applies_to", "rate_percent"],
+      "additionalProperties": false
+    },
+
+    "DividendsTax": {
+      "type": "object",
+      "properties": {
+        "is_dividends_tax_available": { "type": "boolean" },
+        "dividends_tax_rates": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DividendsTaxRate" }
+        },
+        "is_withholding_tax_applied": { "type": "boolean" },
+        "dividends_tax_description": { "type": "string" }
+      },
+      "required": ["is_dividends_tax_available", "is_withholding_tax_applied", "dividends_tax_description"],
+      "additionalProperties": false
+    },
+
+    "VatConditionRate": {
+      "type": "object",
+      "properties": {
+        "rate_percent": { "type": "number" },
+        "applies_to": { "type": "string" },
+        "conditions_note": { "type": "string" }
+      },
+      "required": ["rate_percent"],
+      "additionalProperties": false
+    },
+
+    "VatTax": {
+      "type": "object",
+      "properties": {
+        "is_vat_available": { "type": "boolean" },
+        "vat_standard_rate_percent": { "type": "number" },
+        "vat_condition_rates": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/VatConditionRate" }
+        },
+        "vat_description": { "type": "string" }
+      },
+      "required": ["is_vat_available", "vat_standard_rate_percent", "vat_description"],
+      "additionalProperties": false
+    },
+
+    "OtherTax": {
+      "type": "object",
+      "properties": {
+        "other_tax_type": {
+          "type": "string",
+          "enum": ["CAPITAL_GAINS", "PROPERTY", "INHERITANCE", "WEALTH", "STAMP_DUTY", "TRANSFER", "EXCISE", "OTHER", "UNKNOWN"]
+        },
+        "other_tax_rate": { "$ref": "#/definitions/RateWithConditions" },
+        "other_tax_applies_to": { "type": "string" },
+        "other_tax_description": { "type": "string" }
+      },
+      "required": ["other_tax_type", "other_tax_rate", "other_tax_description"],
+      "additionalProperties": false
+    },
+
+    "RateWithConditions": {
+      "type": "object",
+      "properties": {
+        "range": { "$ref": "#/definitions/RangeOrValue" },
+        "conditions_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "SocialContributions": {
+      "type": "object",
+      "properties": {
+        "contribution_type": { "type": "string" },
+        "contribution_amount": { "type": "integer" },
+        "contribution_note": { "type": "string" }
+      },
+      "required": ["contribution_type", "contribution_amount"],
+      "additionalProperties": false
+    },
+
+    "RangeOrValue": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "integer" },
+        "min": { "type": "integer" },
+        "max": { "type": "integer" },
+        "is_unlimited": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "RangeOrMoney": {
+      "type": "object",
+      "properties": {
+        "value": { "$ref": "#/definitions/Money" },
+        "min": { "$ref": "#/definitions/Money" },
+        "max": { "$ref": "#/definitions/Money" },
+        "is_unlimited": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "Money": {
+      "type": "object",
+      "properties": {
+        "currency": { "type": "string" },
+        "amount": { "type": "number" }
+      },
+      "required": ["currency", "amount"],
+      "additionalProperties": false
+    }
+  }
+}

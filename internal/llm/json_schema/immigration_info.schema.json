@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/immigration.schema.json",
+  "title": "Root",
+  "type": "object",
+  "properties": {
+    "immigration": { "$ref": "#/definitions/ImmigrationInfo" }
+  },
+  "required": ["immigration"],
+  "additionalProperties": false,
+
+  "definitions": {
+    "ImmigrationInfo": {
+      "type": "object",
+      "properties": {
+        "residence_permits": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ResidencePermit" }
+        },
+        "permanent_residency": { "$ref": "#/definitions/PermanentResidency" },
+        "citizenship": { "$ref": "#/definitions/Citizenship" },
+        "digital_nomad_visa": { "$ref": "#/definitions/DigitalNomadVisa" },
+        "other_options": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/OtherOption" }
+        }
+      },
+      "required": ["residence_permits", "permanent_residency", "citizenship", "digital_nomad_visa", "other_options"],
+      "additionalProperties": false
+    },
+
+    "ResidencePermit": {
+      "type": "object",
+      "properties": {
+        "permit_type": {
+          "type": "string",
+          "enum": ["WORK", "FREELANCE", "STUDENT", "INVESTOR", "FAMILY", "ASYLUM", "RETIREMENT", "OTHER", "UNKNOWN"]
+        },
+        "permit_duration_years": { "$ref": "#/definitions/RangeOrValue" },
+        "is_permit_renewable": { "type": "boolean" },
+        "permit_requirements": { "$ref": "#/definitions/PermitRequirements" },
+        "permit_description": { "type": "string" }
+      },
+      "required": ["permit_type", "is_permit_renewable", "permit_requirements", "permit_description"],
+      "additionalProperties": false
+    },
+
+    "PermanentResidency": {
+      "type": "object",
+      "properties": {
+        "years_of_residence_required": { "$ref": "#/definitions/RangeOrValue" },
+        "is_language_test_required": { "type": "boolean" },
+        "is_integration_test_required": { "type": "boolean" },
+        "permanent_residency_description": { "type": "string" }
+      },
+      "required": [
+        "years_of_residence_required",
+        "is_language_test_required",
+        "is_integration_test_required",
+        "permanent_residency_description"
+      ],
+      "additionalProperties": false
+    },
+
+    "Citizenship": {
+      "type": "object",
+      "properties": {
+        "years_until_citizenship": { "$ref": "#/definitions/RangeOrValue" },
+        "is_dual_citizenship_allowed": { "type": "boolean" },
+        "is_language_required_for_citizenship": { "type": "boolean" },
+        "other_citizenship_conditions": { "type": "string" },
+        "citizenship_description": { "type": "string" }
+      },
+      "required": [
+        "years_until_citizenship",
+        "is_dual_citizenship_allowed",
+        "is_language_required_for_citizenship",
+        "citizenship_description"
+      ],
+      "additionalProperties": false
+    },
+
+    "DigitalNomadVisa": {
+      "type": "object",
+      "properties": {
+        "is_digital_nomad_visa_available": { "type": "boolean" },
+        "min_income_requirement": { "$ref": "#/definitions/RangeOrMoney" },
+        "digital_nomad_visa_duration_years": { "$ref": "#/definitions/RangeOrValue" },
+        "is_digital_nomad_visa_renewable": { "type": "boolean" },
+        "digital_nomad_visa_description": { "type": "string" }
+      },
+      "required": ["is_digital_nomad_visa_available", "is_digital_nomad_visa_renewable", "digital_nomad_visa_description"],
+      "additionalProperties": false
+    },
+
+    "OtherOption": {
+      "type": "object",
+      "properties": {
+        "option_type": { "type": "string" },
+        "option_requirements": { "$ref": "#/definitions/PermitRequirements" },
+        "option_description": { "type": "string" }
+      },
+      "required": ["option_type", "option_requirements", "option_description"],
+      "additionalProperties": false
+    },
+
+    "PermitRequirements": {
+      "type": "object",
+      "properties": {
+        "min_income_requirement": { "$ref": "#/definitions/RangeOrMoney" },
+        "investment_amount": { "$ref": "#/definitions/RangeOrMoney" },
+        "other_requirements_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "RangeOrValue": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "integer" },
+        "min": { "type": "integer" },
+        "max": { "type": "integer" },
+        "is_unlimited": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "RangeOrMoney": {
+      "type": "object",
+      "properties": {
+        "value": { "$ref": "#/definitions/Money" },
+        "min": { "$ref": "#/definitions/Money" },
+        "max": { "$ref": "#/definitions/Money" },
+        "is_unlimited": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+
+    "Money": {
+      "type": "object",
+      "properties": {
+        "currency": { "type": "string" },
+        "amount": { "type": "number" }
+      },
+      "required": ["currency", "amount"],
+      "additionalProperties": false
+    }
+  }
+}

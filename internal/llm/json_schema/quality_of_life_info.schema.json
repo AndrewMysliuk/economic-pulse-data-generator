@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/quality-of-life.schema.json",
+  "title": "Root",
+  "type": "object",
+  "properties": {
+    "quality_of_life": { "$ref": "#/definitions/QualityOfLifeInfo" }
+  },
+  "required": ["quality_of_life"],
+  "additionalProperties": false,
+
+  "definitions": {
+    "QualityOfLifeInfo": {
+      "type": "object",
+      "properties": {
+        "safety": { "$ref": "#/definitions/SafetyInfo" },
+        "climate": { "$ref": "#/definitions/ClimateInfo" },
+        "ecology": { "$ref": "#/definitions/EcologyInfo" },
+        "language": { "$ref": "#/definitions/LanguageInfo" }
+      },
+      "required": ["safety", "climate", "ecology", "language"],
+      "additionalProperties": false
+    },
+
+    "SafetyInfo": {
+      "type": "object",
+      "properties": {
+        "quality_of_life_safety_index": { "type": "integer" },
+        "quality_of_life_crime_index": { "type": "integer" },
+        "quality_of_life_safety_note": { "type": "string" }
+      },
+      "required": ["quality_of_life_safety_index", "quality_of_life_crime_index"],
+      "additionalProperties": false
+    },
+
+    "ClimateInfo": {
+      "type": "object",
+      "properties": {
+        "quality_of_life_avg_temp_c": { "type": "integer" },
+        "quality_of_life_sunny_days_per_year": { "type": "integer" },
+        "quality_of_life_rain_days_per_year": { "type": "integer" },
+        "quality_of_life_avg_humidity_percent": { "type": "integer" },
+        "quality_of_life_climate_note": { "type": "string" }
+      },
+      "required": [
+        "quality_of_life_avg_temp_c",
+        "quality_of_life_sunny_days_per_year",
+        "quality_of_life_rain_days_per_year",
+        "quality_of_life_avg_humidity_percent"
+      ],
+      "additionalProperties": false
+    },
+
+    "EcologyInfo": {
+      "type": "object",
+      "properties": {
+        "quality_of_life_air_quality_index": { "type": "integer" },
+        "quality_of_life_water_quality_index": { "type": "integer" },
+        "quality_of_life_ecology_note": { "type": "string" }
+      },
+      "required": ["quality_of_life_air_quality_index", "quality_of_life_water_quality_index"],
+      "additionalProperties": false
+    },
+
+    "LanguageInfo": {
+      "type": "object",
+      "properties": {
+        "quality_of_life_official_languages": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "quality_of_life_english_proficiency_index": { "type": "integer" },
+        "quality_of_life_language_note": { "type": "string" }
+      },
+      "required": ["quality_of_life_english_proficiency_index"],
+      "additionalProperties": false
+    }
+  }
+}
