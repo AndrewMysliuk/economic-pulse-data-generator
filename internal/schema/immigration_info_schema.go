@@ -15,6 +15,7 @@ type ImmigrationInfo struct {
 type (
 	ResidencePermit struct {
 		PermitType         permit_type.PermitType `json:"permit_type"`
+		IsAvailable        bool                   `json:"is_available"`
 		PermitDuration     *RangeOrValue          `json:"permit_duration_years,omitempty"`
 		IsPermitRenewable  bool                   `json:"is_permit_renewable"`
 		PermitRequirements PermitRequirements     `json:"permit_requirements"`

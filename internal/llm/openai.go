@@ -53,8 +53,6 @@ func (c *openAIClient) GetImmigration(ctx context.Context, country schema.Countr
 		return nil, err
 	}
 
-	fmt.Printf("RAW RESPONSE:\n%s\n", string(raw))
-
 	var apiErr schema.APIErrorResponse
 	if err := json.Unmarshal(raw, &apiErr); err == nil && apiErr.Error != nil {
 		return nil, apiErr.Error

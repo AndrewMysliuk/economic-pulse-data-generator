@@ -83,6 +83,7 @@ type (
 	}
 
 	OtherTax struct {
+		IsAvailable bool                `json:"is_available"`
 		TaxType     other_taxes.TaxType `json:"other_tax_type"`
 		Rate        RateWithConditions  `json:"other_tax_rate"`
 		AppliesTo   string              `json:"other_tax_applies_to,omitempty"`

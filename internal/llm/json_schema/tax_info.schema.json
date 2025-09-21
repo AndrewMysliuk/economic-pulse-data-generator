@@ -30,8 +30,12 @@
     "PersonalIncomeTaxRate": {
       "type": "object",
       "properties": {
-        "from_income": { "$ref": "#/definitions/Money" },
-        "to_income": { "$ref": "#/definitions/Money" },
+        "from_income": {
+          "anyOf": [{ "$ref": "#/definitions/Money" }, { "type": "null" }]
+        },
+        "to_income": {
+          "anyOf": [{ "$ref": "#/definitions/Money" }, { "type": "null" }]
+        },
         "rate_percent": { "type": "number" }
       },
       "required": ["from_income", "to_income", "rate_percent"],
@@ -63,7 +67,9 @@
       "properties": {
         "freelance_regime_name": { "type": "string" },
         "freelance_regime_rate_percent": { "type": "number" },
-        "freelance_regime_income_limit": { "$ref": "#/definitions/RangeOrMoney" },
+        "freelance_regime_income_limit": {
+          "anyOf": [{ "$ref": "#/definitions/RangeOrMoney" }, { "type": "null" }]
+        },
         "freelance_regime_social_contributions": { "$ref": "#/definitions/SocialContributions" },
         "freelance_regime_requirements_note": { "type": "string" },
         "freelance_regime_description": { "type": "string" }
@@ -185,9 +191,10 @@
         },
         "other_tax_rate": { "$ref": "#/definitions/RateWithConditions" },
         "other_tax_applies_to": { "type": "string" },
-        "other_tax_description": { "type": "string" }
+        "other_tax_description": { "type": "string" },
+        "is_available": { "type": "boolean" }
       },
-      "required": ["other_tax_type", "other_tax_rate", "other_tax_applies_to", "other_tax_description"],
+      "required": ["other_tax_type", "is_available", "other_tax_rate", "other_tax_applies_to", "other_tax_description"],
       "additionalProperties": false
     },
 
@@ -227,9 +234,9 @@
     "RangeOrMoney": {
       "type": "object",
       "properties": {
-        "value": { "$ref": "#/definitions/Money" },
-        "min": { "$ref": "#/definitions/Money" },
-        "max": { "$ref": "#/definitions/Money" },
+        "value": { "anyOf": [{ "$ref": "#/definitions/Money" }, { "type": "null" }] },
+        "min": { "anyOf": [{ "$ref": "#/definitions/Money" }, { "type": "null" }] },
+        "max": { "anyOf": [{ "$ref": "#/definitions/Money" }, { "type": "null" }] },
         "is_unlimited": { "type": "boolean" }
       },
       "required": ["value", "min", "max", "is_unlimited"],

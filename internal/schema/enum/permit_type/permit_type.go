@@ -9,21 +9,24 @@ func (p PermitType) String() string {
 }
 
 const (
-	Work       PermitType = "WORK"
-	Freelance  PermitType = "FREELANCE"
-	Student    PermitType = "STUDENT"
-	Investor   PermitType = "INVESTOR"
-	Family     PermitType = "FAMILY"
-	Asylum     PermitType = "ASYLUM"
-	Retirement PermitType = "RETIREMENT"
-	Other      PermitType = "OTHER"
-	Unknown    PermitType = "UNKNOWN"
+	Work         PermitType = "WORK"
+	CompanyOwner PermitType = "COMPANY_OWNER"
+	Freelance    PermitType = "FREELANCE"
+	Student      PermitType = "STUDENT"
+	Investor     PermitType = "INVESTOR"
+	Family       PermitType = "FAMILY"
+	Asylum       PermitType = "ASYLUM"
+	Retirement   PermitType = "RETIREMENT"
+	Other        PermitType = "OTHER"
+	Unknown      PermitType = "UNKNOWN"
 )
 
 func New(str string) (PermitType, error) {
 	switch str {
 	case "WORK":
 		return Work, nil
+	case "COMPANY_OWNER":
+		return CompanyOwner, nil
 	case "FREELANCE":
 		return Freelance, nil
 	case "STUDENT":
@@ -48,6 +51,7 @@ func New(str string) (PermitType, error) {
 func Values() []PermitType {
 	return []PermitType{
 		Work,
+		CompanyOwner,
 		Freelance,
 		Student,
 		Investor,
