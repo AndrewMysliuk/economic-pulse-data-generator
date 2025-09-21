@@ -1,11 +1,14 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"log"
 	"os"
 
 	"github.com/joho/godotenv"
 
+	"github.com/AndrewMysliuk/expath-data-generator/internal/core"
 	"github.com/AndrewMysliuk/expath-data-generator/internal/llm"
 )
 
@@ -22,5 +25,10 @@ func main() {
 
 	llmClient := llm.NewOpenAIClient(openaiKey)
 
-	_ = llmClient
+	ctx := context.Background()
+	coreApp := core.NewCore(llmClient)
+
+	if err := coreApp.Run(ctx, "output"); err != nil {
+		fmt.Printf("error: %+v\n", err)
+	}
 }

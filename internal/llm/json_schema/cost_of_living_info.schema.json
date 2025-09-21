@@ -36,7 +36,8 @@
         "cost_of_living_rent_in_capital",
         "cost_of_living_rent_in_province",
         "cost_of_living_buy_price_m2_in_capital",
-        "cost_of_living_buy_price_m2_in_province"
+        "cost_of_living_buy_price_m2_in_province",
+        "cost_of_living_housing_note"
       ],
       "additionalProperties": false
     },
@@ -49,7 +50,12 @@
         "cost_of_living_groceries_index": { "type": "integer" },
         "cost_of_living_groceries_note": { "type": "string" }
       },
-      "required": ["cost_of_living_groceries_monthly_basket", "cost_of_living_groceries_family_basket", "cost_of_living_groceries_index"],
+      "required": [
+        "cost_of_living_groceries_monthly_basket",
+        "cost_of_living_groceries_family_basket",
+        "cost_of_living_groceries_index",
+        "cost_of_living_groceries_note"
+      ],
       "additionalProperties": false
     },
 
@@ -61,7 +67,12 @@
         "cost_of_living_healthcare_doctor_visit": { "$ref": "#/definitions/RangeOrMoney" },
         "cost_of_living_healthcare_note": { "type": "string" }
       },
-      "required": ["is_healthcare_available", "cost_of_living_healthcare_insurance_monthly", "cost_of_living_healthcare_doctor_visit"],
+      "required": [
+        "is_healthcare_available",
+        "cost_of_living_healthcare_insurance_monthly",
+        "cost_of_living_healthcare_doctor_visit",
+        "cost_of_living_healthcare_note"
+      ],
       "additionalProperties": false
     },
 
@@ -78,7 +89,8 @@
         "is_transport_available",
         "cost_of_living_transport_public_monthly_pass",
         "cost_of_living_transport_gasoline_liter",
-        "cost_of_living_transport_taxi_start"
+        "cost_of_living_transport_taxi_start",
+        "cost_of_living_transport_note"
       ],
       "additionalProperties": false
     },
@@ -91,7 +103,12 @@
         "cost_of_living_internet_mobile_monthly": { "$ref": "#/definitions/RangeOrMoney" },
         "cost_of_living_internet_note": { "type": "string" }
       },
-      "required": ["is_internet_available", "cost_of_living_internet_home_monthly", "cost_of_living_internet_mobile_monthly"],
+      "required": [
+        "is_internet_available",
+        "cost_of_living_internet_home_monthly",
+        "cost_of_living_internet_mobile_monthly",
+        "cost_of_living_internet_note"
+      ],
       "additionalProperties": false
     },
 
@@ -103,6 +120,7 @@
         "max": { "$ref": "#/definitions/Money" },
         "is_unlimited": { "type": "boolean" }
       },
+      "required": ["value", "min", "max", "is_unlimited"],
       "additionalProperties": false
     },
 

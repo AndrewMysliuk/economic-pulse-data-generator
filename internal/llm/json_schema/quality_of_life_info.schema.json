@@ -29,7 +29,7 @@
         "quality_of_life_crime_index": { "type": "integer" },
         "quality_of_life_safety_note": { "type": "string" }
       },
-      "required": ["quality_of_life_safety_index", "quality_of_life_crime_index"],
+      "required": ["quality_of_life_safety_index", "quality_of_life_crime_index", "quality_of_life_safety_note"],
       "additionalProperties": false
     },
 
@@ -46,7 +46,8 @@
         "quality_of_life_avg_temp_c",
         "quality_of_life_sunny_days_per_year",
         "quality_of_life_rain_days_per_year",
-        "quality_of_life_avg_humidity_percent"
+        "quality_of_life_avg_humidity_percent",
+        "quality_of_life_climate_note"
       ],
       "additionalProperties": false
     },
@@ -58,7 +59,7 @@
         "quality_of_life_water_quality_index": { "type": "integer" },
         "quality_of_life_ecology_note": { "type": "string" }
       },
-      "required": ["quality_of_life_air_quality_index", "quality_of_life_water_quality_index"],
+      "required": ["quality_of_life_air_quality_index", "quality_of_life_water_quality_index", "quality_of_life_ecology_note"],
       "additionalProperties": false
     },
 
@@ -72,7 +73,7 @@
         "quality_of_life_english_proficiency_index": { "type": "integer" },
         "quality_of_life_language_note": { "type": "string" }
       },
-      "required": ["quality_of_life_english_proficiency_index"],
+      "required": ["quality_of_life_official_languages", "quality_of_life_english_proficiency_index", "quality_of_life_language_note"],
       "additionalProperties": false
     }
   }

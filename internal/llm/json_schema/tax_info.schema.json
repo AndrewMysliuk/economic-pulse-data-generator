@@ -34,7 +34,7 @@
         "to_income": { "$ref": "#/definitions/Money" },
         "rate_percent": { "type": "number" }
       },
-      "required": ["rate_percent"],
+      "required": ["from_income", "to_income", "rate_percent"],
       "additionalProperties": false
     },
 
@@ -49,7 +49,12 @@
         },
         "personal_income_tax_description": { "type": "string" }
       },
-      "required": ["is_personal_income_tax_available", "is_personal_income_tax_progressive", "personal_income_tax_description"],
+      "required": [
+        "is_personal_income_tax_available",
+        "is_personal_income_tax_progressive",
+        "personal_income_tax_rates",
+        "personal_income_tax_description"
+      ],
       "additionalProperties": false
     },
 
@@ -66,7 +71,9 @@
       "required": [
         "freelance_regime_name",
         "freelance_regime_rate_percent",
+        "freelance_regime_income_limit",
         "freelance_regime_social_contributions",
+        "freelance_regime_requirements_note",
         "freelance_regime_description"
       ],
       "additionalProperties": false
@@ -81,7 +88,7 @@
           "items": { "$ref": "#/definitions/FreelanceRegime" }
         }
       },
-      "required": ["is_freelance_tax_available"],
+      "required": ["is_freelance_tax_available", "freelance_tax_regimes"],
       "additionalProperties": false
     },
 
@@ -93,7 +100,12 @@
         "special_regime_requirements_note": { "type": "string" },
         "special_regime_description": { "type": "string" }
       },
-      "required": ["special_regime_name", "special_regime_effective_rate_percent", "special_regime_description"],
+      "required": [
+        "special_regime_name",
+        "special_regime_effective_rate_percent",
+        "special_regime_requirements_note",
+        "special_regime_description"
+      ],
       "additionalProperties": false
     },
 
@@ -108,7 +120,7 @@
         },
         "corporate_tax_description": { "type": "string" }
       },
-      "required": ["is_corporate_tax_available", "corporate_tax_rate", "corporate_tax_description"],
+      "required": ["is_corporate_tax_available", "corporate_tax_rate", "corporate_tax_special_regimes", "corporate_tax_description"],
       "additionalProperties": false
     },
 
@@ -119,7 +131,7 @@
         "rate_percent": { "type": "number" },
         "conditions_note": { "type": "string" }
       },
-      "required": ["applies_to", "rate_percent"],
+      "required": ["applies_to", "rate_percent", "conditions_note"],
       "additionalProperties": false
     },
 
@@ -134,7 +146,7 @@
         "is_withholding_tax_applied": { "type": "boolean" },
         "dividends_tax_description": { "type": "string" }
       },
-      "required": ["is_dividends_tax_available", "is_withholding_tax_applied", "dividends_tax_description"],
+      "required": ["is_dividends_tax_available", "dividends_tax_rates", "is_withholding_tax_applied", "dividends_tax_description"],
       "additionalProperties": false
     },
 
@@ -145,7 +157,7 @@
         "applies_to": { "type": "string" },
         "conditions_note": { "type": "string" }
       },
-      "required": ["rate_percent"],
+      "required": ["rate_percent", "applies_to", "conditions_note"],
       "additionalProperties": false
     },
 
@@ -160,7 +172,7 @@
         },
         "vat_description": { "type": "string" }
       },
-      "required": ["is_vat_available", "vat_standard_rate_percent", "vat_description"],
+      "required": ["is_vat_available", "vat_standard_rate_percent", "vat_condition_rates", "vat_description"],
       "additionalProperties": false
     },
 
@@ -175,7 +187,7 @@
         "other_tax_applies_to": { "type": "string" },
         "other_tax_description": { "type": "string" }
       },
-      "required": ["other_tax_type", "other_tax_rate", "other_tax_description"],
+      "required": ["other_tax_type", "other_tax_rate", "other_tax_applies_to", "other_tax_description"],
       "additionalProperties": false
     },
 
@@ -185,6 +197,7 @@
         "range": { "$ref": "#/definitions/RangeOrValue" },
         "conditions_note": { "type": "string" }
       },
+      "required": ["range", "conditions_note"],
       "additionalProperties": false
     },
 
@@ -195,7 +208,7 @@
         "contribution_amount": { "type": "integer" },
         "contribution_note": { "type": "string" }
       },
-      "required": ["contribution_type", "contribution_amount"],
+      "required": ["contribution_type", "contribution_amount", "contribution_note"],
       "additionalProperties": false
     },
 
@@ -207,6 +220,7 @@
         "max": { "type": "integer" },
         "is_unlimited": { "type": "boolean" }
       },
+      "required": ["value", "min", "max", "is_unlimited"],
       "additionalProperties": false
     },
 
@@ -218,6 +232,7 @@
         "max": { "$ref": "#/definitions/Money" },
         "is_unlimited": { "type": "boolean" }
       },
+      "required": ["value", "min", "max", "is_unlimited"],
       "additionalProperties": false
     },
 

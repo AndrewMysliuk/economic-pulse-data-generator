@@ -31,7 +31,12 @@
         },
         "personal_account_requirements_note": { "type": "string" }
       },
-      "required": ["is_personal_account_available", "does_personal_account_require_residency"],
+      "required": [
+        "is_personal_account_available",
+        "does_personal_account_require_residency",
+        "personal_account_requirements",
+        "personal_account_requirements_note"
+      ],
       "additionalProperties": false
     },
 
@@ -46,7 +51,12 @@
         },
         "business_account_requirements_note": { "type": "string" }
       },
-      "required": ["is_business_account_available", "does_business_account_require_local_company"],
+      "required": [
+        "is_business_account_available",
+        "does_business_account_require_local_company",
+        "business_account_requirements",
+        "business_account_requirements_note"
+      ],
       "additionalProperties": false
     },
 
@@ -88,7 +98,13 @@
         "fintech_service_requirements_note": { "type": "string" },
         "fintech_service_limitations_note": { "type": "string" }
       },
-      "required": ["fintech_service_name", "is_fintech_service_available", "does_fintech_service_require_residency"],
+      "required": [
+        "fintech_service_name",
+        "is_fintech_service_available",
+        "does_fintech_service_require_residency",
+        "fintech_service_requirements_note",
+        "fintech_service_limitations_note"
+      ],
       "additionalProperties": false
     },
 
@@ -101,7 +117,7 @@
         },
         "fintech_note": { "type": "string" }
       },
-      "required": ["fintech_services"],
+      "required": ["fintech_services", "fintech_note"],
       "additionalProperties": false
     }
   }

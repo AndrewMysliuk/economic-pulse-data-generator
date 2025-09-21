@@ -1,11 +1,19 @@
 package country_alpha2
 
-import "github.com/pkg/errors"
+import (
+	"strings"
+
+	"github.com/pkg/errors"
+)
 
 type CountryAlpha2 string
 
 func (c CountryAlpha2) String() string {
 	return string(c)
+}
+
+func (c CountryAlpha2) Lower() string {
+	return strings.ToLower(string(c))
 }
 
 const (

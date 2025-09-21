@@ -41,7 +41,7 @@
         "permit_requirements": { "$ref": "#/definitions/PermitRequirements" },
         "permit_description": { "type": "string" }
       },
-      "required": ["permit_type", "is_permit_renewable", "permit_requirements", "permit_description"],
+      "required": ["permit_type", "permit_duration_years", "is_permit_renewable", "permit_requirements", "permit_description"],
       "additionalProperties": false
     },
 
@@ -75,6 +75,7 @@
         "years_until_citizenship",
         "is_dual_citizenship_allowed",
         "is_language_required_for_citizenship",
+        "other_citizenship_conditions",
         "citizenship_description"
       ],
       "additionalProperties": false
@@ -89,7 +90,13 @@
         "is_digital_nomad_visa_renewable": { "type": "boolean" },
         "digital_nomad_visa_description": { "type": "string" }
       },
-      "required": ["is_digital_nomad_visa_available", "is_digital_nomad_visa_renewable", "digital_nomad_visa_description"],
+      "required": [
+        "is_digital_nomad_visa_available",
+        "min_income_requirement",
+        "digital_nomad_visa_duration_years",
+        "is_digital_nomad_visa_renewable",
+        "digital_nomad_visa_description"
+      ],
       "additionalProperties": false
     },
 
@@ -111,6 +118,7 @@
         "investment_amount": { "$ref": "#/definitions/RangeOrMoney" },
         "other_requirements_note": { "type": "string" }
       },
+      "required": ["min_income_requirement", "investment_amount", "other_requirements_note"],
       "additionalProperties": false
     },
 
@@ -122,6 +130,7 @@
         "max": { "type": "integer" },
         "is_unlimited": { "type": "boolean" }
       },
+      "required": ["value", "min", "max", "is_unlimited"],
       "additionalProperties": false
     },
 
@@ -133,6 +142,7 @@
         "max": { "$ref": "#/definitions/Money" },
         "is_unlimited": { "type": "boolean" }
       },
+      "required": ["value", "min", "max", "is_unlimited"],
       "additionalProperties": false
     },
 

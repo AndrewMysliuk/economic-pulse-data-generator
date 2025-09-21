@@ -53,11 +53,28 @@ func (c *openAIClient) GetImmigration(ctx context.Context, country schema.Countr
 		return nil, err
 	}
 
+	fmt.Printf("RAW RESPONSE:\n%s\n", string(raw))
+
+	var apiErr schema.APIErrorResponse
+	if err := json.Unmarshal(raw, &apiErr); err == nil && apiErr.Error != nil {
+		return nil, apiErr.Error
+	}
+
+	var resp schema.OpenAIResponse
+	if err := json.Unmarshal(raw, &resp); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal OpenAIResponse: %w", err)
+	}
+
+	content, err := resp.FirstText()
+	if err != nil {
+		return nil, err
+	}
+
 	var wrapper struct {
 		Immigration schema.ImmigrationInfo `json:"immigration"`
 	}
-	if err := json.Unmarshal(raw, &wrapper); err != nil {
-		return nil, fmt.Errorf("unmarshal immigration: %w", err)
+	if err := json.Unmarshal([]byte(content), &wrapper); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal immigration JSON: %w\nraw=%s", err, content)
 	}
 
 	return &wrapper.Immigration, nil
@@ -71,10 +88,25 @@ func (c *openAIClient) GetTaxes(ctx context.Context, country schema.CountryInfo)
 		return nil, err
 	}
 
+	var apiErr schema.APIErrorResponse
+	if err := json.Unmarshal(raw, &apiErr); err == nil && apiErr.Error != nil {
+		return nil, apiErr.Error
+	}
+
+	var resp schema.OpenAIResponse
+	if err := json.Unmarshal(raw, &resp); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal OpenAIResponse: %w", err)
+	}
+
+	content, err := resp.FirstText()
+	if err != nil {
+		return nil, err
+	}
+
 	var wrapper struct {
 		Taxes schema.TaxInfo `json:"taxes"`
 	}
-	if err := json.Unmarshal(raw, &wrapper); err != nil {
+	if err := json.Unmarshal([]byte(content), &wrapper); err != nil {
 		return nil, fmt.Errorf("unmarshal taxes: %w", err)
 	}
 
@@ -89,10 +121,25 @@ func (c *openAIClient) GetFinance(ctx context.Context, country schema.CountryInf
 		return nil, err
 	}
 
+	var apiErr schema.APIErrorResponse
+	if err := json.Unmarshal(raw, &apiErr); err == nil && apiErr.Error != nil {
+		return nil, apiErr.Error
+	}
+
+	var resp schema.OpenAIResponse
+	if err := json.Unmarshal(raw, &resp); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal OpenAI wrapper: %w", err)
+	}
+
+	content, err := resp.FirstText()
+	if err != nil {
+		return nil, err
+	}
+
 	var wrapper struct {
 		Finance schema.FinanceInfo `json:"finance"`
 	}
-	if err := json.Unmarshal(raw, &wrapper); err != nil {
+	if err := json.Unmarshal([]byte(content), &wrapper); err != nil {
 		return nil, fmt.Errorf("unmarshal finance: %w", err)
 	}
 
@@ -107,10 +154,25 @@ func (c *openAIClient) GetCostOfLiving(ctx context.Context, country schema.Count
 		return nil, err
 	}
 
+	var apiErr schema.APIErrorResponse
+	if err := json.Unmarshal(raw, &apiErr); err == nil && apiErr.Error != nil {
+		return nil, apiErr.Error
+	}
+
+	var resp schema.OpenAIResponse
+	if err := json.Unmarshal(raw, &resp); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal OpenAI wrapper: %w", err)
+	}
+
+	content, err := resp.FirstText()
+	if err != nil {
+		return nil, err
+	}
+
 	var wrapper struct {
 		CostOfLiving schema.CostOfLivingInfo `json:"cost_of_living"`
 	}
-	if err := json.Unmarshal(raw, &wrapper); err != nil {
+	if err := json.Unmarshal([]byte(content), &wrapper); err != nil {
 		return nil, fmt.Errorf("unmarshal cost_of_living: %w", err)
 	}
 
@@ -125,10 +187,25 @@ func (c *openAIClient) GetQualityOfLife(ctx context.Context, country schema.Coun
 		return nil, err
 	}
 
+	var apiErr schema.APIErrorResponse
+	if err := json.Unmarshal(raw, &apiErr); err == nil && apiErr.Error != nil {
+		return nil, apiErr.Error
+	}
+
+	var resp schema.OpenAIResponse
+	if err := json.Unmarshal(raw, &resp); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal OpenAI wrapper: %w", err)
+	}
+
+	content, err := resp.FirstText()
+	if err != nil {
+		return nil, err
+	}
+
 	var wrapper struct {
 		QualityOfLife schema.QualityOfLifeInfo `json:"quality_of_life"`
 	}
-	if err := json.Unmarshal(raw, &wrapper); err != nil {
+	if err := json.Unmarshal([]byte(content), &wrapper); err != nil {
 		return nil, fmt.Errorf("unmarshal quality_of_life: %w", err)
 	}
 
@@ -146,9 +223,11 @@ func (c *openAIClient) CallWithSchema(ctx context.Context, query string, schema 
 		},
 		"text": map[string]any{
 			"format": map[string]any{
-				"type":   "json_schema",
-				"schema": json.RawMessage(schema),
-				"strict": true,
+				"type":        "json_schema",
+				"name":        "JsonSchemaResponse",
+				"description": "Structured response with summary of search results",
+				"schema":      json.RawMessage(schema),
+				"strict":      true,
 			},
 		},
 	}
